@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Demo Interactiva - SEGUROS DESPLIEGUES | BBVA Seguros</title>
+<style>
+  :root {
+    --navy-bbva: #004481;
+    --aqua-bbva: #1464A5;
+    --bg-bbva: #F4F6F8;
+    --text-main: #121212;
+    --text-white: #FFFFFF;
+    --success: #28A745;
+    --danger: #D9534F;
+    --audit: #028484;
+    --secondary: #6C757D;
+  }
+
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+
+  body {
+    background-color: #E9EEF3;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+    padding: 15px;
+  }
+
+  /* Banner superior de Demo */
+  .demo-banner {
+    width: 100%;
+    max-width: 960px;
+    background: #FFF8E7;
+    border: 1px solid #F3D17A;
+    color: #7A5800;
+    padding: 8px 16px;
+    border-radius: 6px;
+    margin-bottom: 12px;
+    font-size: 13px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .demo-badge {
+    background: var(--navy-bbva);
+    color: white;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-weight: bold;
+    font-size: 11px;
+    letter-spacing: 0.5px;
+  }
+
+  /* Ventana Principal estilo Tkinter BBVA */
+  .app-window {
+    width: 100%;
+    max-width: 960px;
+    background-color: var(--bg-bbva);
+    border-radius: 8px;
+    box-shadow: 0 10px 30px rgba(0, 34, 68, 0.2);
+    overflow: hidden;
+    border: 1px solid #C8D2DC;
+  }
+
+  /* Encabezado Corporativo */
+  .header-frame {
+    background-color: var(--navy-bbva);
+    padding: 16px 20px;
+    text-align: center;
+    color: var(--text-white);
+  }
+
+  .header-title {
+    font-size: 22px;
+    font-weight: bold;
+    letter-spacing: 0.5px;
+  }
+
+  .header-authors {
+    font-size: 13px;
+    font-style: italic;
+    color: #D4E4F7;
+    margin-top: 4px;
+  }
+
+  .header-company {
+    font-size: 14px;
+    font-weight: bold;
+    color: var(--text-white);
+    margin-top: 4px;
+    letter-spacing: 1px;
+  }
+
+  /* Contenedor principal */
+  .main-container {
+    padding: 20px;
+  }
+
+  /* Fieldset estilo LabelFrame */
+  .label-frame {
+    border: 1px solid #BCC7D4;
+    border-radius: 4px;
+    padding: 15px 18px;
+    margin-bottom: 16px;
+    position: relative;
+    background-color: var(--bg-bbva);
+  }
+
+  .label-frame-title {
+    font-size: 13px;
+    font-weight: bold;
+    color: var(--navy-bbva);
+    padding: 0 6px;
+  }
+
+  .config-grid {
+    display: grid;
+    grid-template-columns: 180px 1fr;
+    gap: 12px 15px;
+    align-items: center;
+    margin-top: 6px;
+  }
+
+  .config-label {
+    font-size: 13px;
+    font-weight: bold;
+    color: var(--text-main);
+  }
+
+  .radio-group {
+    display: flex;
+    gap: 20px;
+    font-size: 13px;
+  }
+
+  .radio-group label {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    cursor: pointer;
+  }
+
+  .feature-input {
+    width: 100%;
+    max-width: 320px;
+    padding: 6px 10px;
+    font-size: 14px;
+    border: 1px solid #9AA8B8;
+    border-radius: 3px;
+    background: #FFFFFF;
+  }
+
+  .feature-input:focus {
+    outline: 2px solid var(--aqua-bbva);
+    border-color: var(--aqua-bbva);
+  }
+
+  .btn-primary {
+    grid-column: 1 / -1;
+    background-color: var(--aqua-bbva);
+    color: var(--text-white);
+    border: none;
+    padding: 10px;
+    font-size: 14px;
+    font-weight: bold;
+    border-radius: 3px;
+    cursor: pointer;
+    margin-top: 6px;
+    transition: background 0.2s;
+  }
+
+  .btn-primary:hover {
+    background-color: #0F4F85;
+  }
+
+  /* Consola de Logs */
+  .console-box {
+    width: 100%;
+    height: 270px;
+    background-color: #FFFFFF;
+    border: 1px solid #9AA8B8;
+    padding: 12px;
+    font-family: 'Consolas', 'Courier New', monospace;
+    font-size: 12.5px;
+    color: #222222;
+    overflow-y: auto;
+    white-space: pre-wrap;
+    line-height: 1.45;
+    margin-top: 6px;
+  }
+
+  .log-ok { color: #198754; font-weight: bold; }
+  .log-info { color: #004481; font-weight: bold; }
+  .log-warn { color: #B45309; font-weight: bold; }
+  .log-sec { color: #028484; font-weight: bold; }
+
+  /* Barra de 4 botones inferiores */
+  .actions-bar {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+    margin-top: 10px;
+  }
+
+  .action-btn {
+    padding: 12px 8px;
+    border: none;
+    border-radius: 3px;
+    color: var(--text-white);
+    font-size: 12.5px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: opacity 0.2s, transform 0.1s;
+  }
+
+  .action-btn:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+  }
+
+  .action-btn:not(:disabled):hover {
+    opacity: 0.92;
+  }
+
+  .action-btn:not(:disabled):active {
+    transform: scale(0.99);
+  }
+
+  .btn-inst { background-color: var(--navy-bbva); }
+  .btn-roll { background-color: var(--danger); }
+  .btn-audit { background-color: var(--audit); }
+  .btn-exit { background-color: var(--secondary); }
+
+  /* Modal visual para simular SQL*Plus o Explorador */
+  .modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.55);
+    justify-content: center;
+    align-items: center;
+    padding: 15px;
+    z-index: 100;
+  }
+
+  .modal-card {
+    background: #1E1E1E;
+    color: #E5E5E5;
+    width: 100%;
+    max-width: 650px;
+    border-radius: 6px;
+    overflow: hidden;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.4);
+    border: 1px solid #444;
+  }
+
+  .modal-header {
+    background: #2D2D2D;
+    padding: 10px 15px;
+    font-size: 13px;
+    font-weight: bold;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: #FFFFFF;
+  }
+
+  .modal-body {
+    padding: 15px;
+    font-family: 'Consolas', monospace;
+    font-size: 12.5px;
+    line-height: 1.5;
+    max-height: 360px;
+    overflow-y: auto;
+    white-space: pre-wrap;
+  }
+
+  .modal-footer {
+    background: #252526;
+    padding: 10px 15px;
+    text-align: right;
+  }
+
+  .btn-close-modal {
+    background: var(--aqua-bbva);
+    color: white;
+    border: none;
+    padding: 6px 14px;
+    border-radius: 3px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 12px;
+  }
+
+  @media (max-width: 700px) {
+    .actions-bar {
+      grid-template-columns: 1fr 1fr;
+    }
+    .config-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+</head>
+<body>
+
+  <div class="demo-banner">
+    <div><span class="demo-badge">DEMO INTERACTIVA</span> Simulador funcional para presentación <strong>Potencia.IA</strong> — Sin conexión directa a BBDD productiva.</div>
+    <div><strong>Paso 1:</strong> Pulsa <em>Organizar & Extraer Artefactos</em></div>
+  </div>
+
+  <div class="app-window">
+    <!-- ENCABEZADO CORPORATIVO -->
+    <div class="header-frame">
+      <div class="header-title">SEGUROS DESPLIEGUES</div>
+      <div class="header-authors">Desarrollado y Gestionado por: Enoides Mejía</div>
+      <div class="header-company">BBVA SEGUROS</div>
+    </div>
+
+    <div class="main-container">
+      <!-- SECCIÓN 1: PARÁMETROS -->
+      <fieldset class="label-frame">
+        <legend class="label-frame-title"> Parámetros del Despliegue </legend>
+        <div class="config-grid">
+          <div class="config-label">Entorno Target:</div>
+          <div class="radio-group">
+            <label><input type="radio" name="entorno" value="CALIDAD" checked> CALIDAD (acselprb)</label>
+            <label><input type="radio" name="entorno" value="PRODUCCION"> PRODUCCIÓN (acselx_d)</label>
+          </div>
+
+          <div class="config-label">Identificador Feature:</div>
+          <div>
+            <input type="text" id="featureInput" class="feature-input" value="COLONEACSE-5041">
+          </div>
+
+          <button class="btn-primary" onclick="procesarDespliegue()">Organizar &amp; Extraer Artefactos</button>
+        </div>
+      </fieldset>
+
+      <!-- SECCIÓN 2: CONSOLA DE LOGS -->
+      <fieldset class="label-frame">
+        <legend class="label-frame-title"> Consola de Procesamiento &amp; Trazabilidad </legend>
+        <div id="consoleOutput" class="console-box">Listo para iniciar. Seleccione el entorno, valide la Feature y presione "Organizar & Extraer Artefactos"...</div>
+      </fieldset>
+
+      <!-- SECCIÓN 3: BOTONES DE EJECUCIÓN -->
+      <div class="actions-bar">
+        <button id="btnInst" class="action-btn btn-inst" disabled onclick="simularInstalacion()">1. Ejecutar INSTALACIÓN</button>
+        <button id="btnRoll" class="action-btn btn-roll" disabled onclick="simularRollback()">2. Ejecutar ROLLBACK</button>
+        <button id="btnAudit" class="action-btn btn-audit" disabled onclick="simularAuditoria()">3. Extraer Objetos BBDD</button>
+        <button id="btnFolder" class="action-btn btn-exit" onclick="simularCarpeta()">4. Ver Estructura Carpetas</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL PARA SIMULAR VENTANA CMD / SQL*PLUS / CARPETAS -->
+  <div id="modalOverlay" class="modal-overlay">
+    <div class="modal-card">
+      <div class="modal-header">
+        <span id="modalTitle">Consola SQL*Plus</span>
+        <span style="cursor:pointer;" onclick="cerrarModal()">✕</span>
+      </div>
+      <div id="modalBody" class="modal-body"></div>
+      <div class="modal-footer">
+        <button class="btn-close-modal" onclick="cerrarModal()">Cerrar Vista</button>
+      </div>
+    </div>
+  </div>
+
+<script>
+  const consoleEl = document.getElementById('consoleOutput');
+  let procesado = false;
+
+  function appendLog(htmlText) {
+    consoleEl.innerHTML += htmlText + "\n";
+    consoleEl.scrollTop = consoleEl.scrollHeight;
+  }
+
+  function getParams() {
+    const entorno = document.querySelector('input[name="entorno"]:checked').value;
+    const feature = document.getElementById('featureInput').value.trim() || "COLONEACSE-5041";
+    const featureNorm = feature.replace(/-/g, '_');
+    return { entorno, feature, featureNorm };
+  }
+
+  function procesarDespliegue() {
+    const { entorno, feature, featureNorm } = getParams();
+    consoleEl.innerHTML = "";
+    
+    const isQA = entorno === "CALIDAD";
+    const baseDir = isQA 
+      ? `C:\\backup_seguros\\SEGUROS\\INSTALACIONES\\CALIDAD\\2026\\NOVIEMBRE\\AX\\18\\${feature}`
+      : `C:\\backup_seguros\\SEGUROS\\INSTALACIONES\\PRODUCCION\\NOVIEMBRE\\${feature}`;
+    const zipFeat = isQA ? `${feature}.zip` : `${feature}PR.zip`;
+    const zipMain = isQA ? `main.zip` : `mainpr.zip`;
+    const varPass = isQA ? `PASS_ACSEL_QA` : `PASS_ACSEL_PR`;
+
+    const pasos = [
+      `<span class="log-info">=== INICIANDO PROCESO DE DESPLIEGUE PARA [${entorno}] ===</span>`,
+      `Feature Objetivo: <strong>${feature}</strong> (Token normalizado: ${featureNorm})`,
+      `[INFO] Organizando artefactos y validando estructura...`,
+      `[Ruta Destino]: ${baseDir}`,
+      `[Buscando ZIP Feature]: D:\\PROYECTO DESCARGAR DESDE GITHUB\\PASOS ${isQA ? 'QA' : 'PR'}\\${zipFeat}`,
+      `[Buscando ZIP Main (Respaldo)]: D:\\PROYECTO DESCARGAR DESDE GITHUB\\PASOS ${isQA ? 'QA' : 'PR'}\\${zipMain}`,
+      `\n<span class="log-info">--- 1. Procesando Artefactos de INSTALACIÓN ---</span>`,
+      `<span class="log-ok">[OK]</span> Listado detectado en /entregas/: listado_${featureNorm}.sql`,
+      `[INFO] 3 componentes referenciados en el listado.`,
+      ` -> <span class="log-ok">[EXTRAÍDO desde ZIP Feature]</span> ${feature}_Script_Tablas.sql`,
+      ` -> <span class="log-ok">[EXTRAÍDO desde ZIP Feature]</span> PR_ACSEL_POLIZAS.pks`,
+      ` -> <span class="log-ok">[EXTRAÍDO desde ZIP Feature]</span> PR_ACSEL_POLIZAS.pkb`,
+      `\n<span class="log-info">--- 2. Procesando Artefactos de ROLLBACK (Objetos desde Main) ---</span>`,
+      `<span class="log-ok">[OK]</span> Listado detectado en /entregas/: listado_rollback_${featureNorm}.sql`,
+      `[INFO] 2 componentes referenciados para retorno seguro.`,
+      ` -> <span class="log-ok">[EXTRAÍDO desde Main]</span> PR_ACSEL_POLIZAS.pks`,
+      ` -> <span class="log-ok">[EXTRAÍDO desde Main]</span> PR_ACSEL_POLIZAS.pkb`,
+      `\n<span class="log-sec">[SEGURIDAD ZERO-HARDCODING]</span> Variable de entorno %${varPass}% verificada en el sistema.`,
+      `<span class="log-ok">[OK]</span> Scripts .bat creados sin exposición de credenciales.`
+    ];
+
+    let i = 0;
+    const interval = setInterval(() => {
+      if (i < pasos.length) {
+        appendLog(pasos[i]);
+        i++;
+      } else {
+        clearInterval(interval);
+        document.getElementById('btnInst').disabled = false;
+        document.getElementById('btnRoll').disabled = false;
+        document.getElementById('btnAudit').disabled = false;
+        procesado = true;
+      }
+    }, 90);
+  }
+
+  function simularInstalacion() {
+    const { entorno, feature } = getParams();
+    const isQA = entorno === "CALIDAD";
+    const varPass = isQA ? "PASS_ACSEL_QA" : "PASS_ACSEL_PR";
+    const sid = isQA ? "ACSELPRB" : "acselx_d";
+
+    appendLog(`\n<span class="log-info">[EJECUTANDO INSTALACIÓN]</span> Lanzando SQL*Plus para ${entorno}...`);
+    
+    abrirModal(
+      `CMD - SCRIPT_${isQA ? 'QA' : 'PRE'}_NEW.bat [${feature}]`,
+      `=========================================================\n` +
+      `Iniciando instalacion segura en ambiente de ${entorno}\n` +
+      `=========================================================\n` +
+      `[SEGURIDAD] Inyectando credencial desde variable de entorno %${varPass}%...\n` +
+      `Conectando a: ACSELPRB/********@//82.250.92.162:1521/${sid}\n\n` +
+      `SQL> @listado.sql\n` +
+      `  -> Ejecutando ${feature}_Script_Tablas.sql ... Tabla modificada.\n` +
+      `  -> Compilando PR_ACSEL_POLIZAS.pks ... Especificacion creada.\n` +
+      `  -> Compilando PR_ACSEL_POLIZAS.pkb ... Cuerpo del paquete creado sin errores.\n\n` +
+      `[OK] Log de evidencia generado: Evidencia_instalacion_log.sql\n` +
+      `=========================================================`
+    );
+  }
+
+  function simularRollback() {
+    const { entorno, feature } = getParams();
+    if (!confirm(`¿Está seguro que desea ejecutar el plan de retorno (ROLLBACK) para ${feature} en ${entorno}?`)) return;
+
+    const isQA = entorno === "CALIDAD";
+    const varPass = isQA ? "PASS_ACSEL_QA" : "PASS_ACSEL_PR";
+    const sid = isQA ? "ACSELPRB" : "acselx_d";
+
+    appendLog(`\n<span class="log-warn">[EJECUTANDO ROLLBACK]</span> Lanzando plan de retorno desde respaldo Main...`);
+
+    abrirModal(
+      `CMD - SCRIPT_${isQA ? 'QA' : 'PRE'}_ROLL_NEW.bat [${feature}]`,
+      `====================================================================\n` +
+      `Iniciando instalacion segura en ambiente de ${entorno} - ROLLBACK\n` +
+      `====================================================================\n` +
+      `[SEGURIDAD] Inyectando credencial desde variable de entorno %${varPass}%...\n` +
+      `Conectando a: ACSELPRB/********@//82.250.92.162:1521/${sid}\n\n` +
+      `SQL> @listado_rollback.sql\n` +
+      `  -> Restaurando PR_ACSEL_POLIZAS.pks (Version Main) ... Especificacion creada.\n` +
+      `  -> Restaurando PR_ACSEL_POLIZAS.pkb (Version Main) ... Cuerpo creado.\n\n` +
+      `[OK] Retorno completado. Log: Evidencia_instalacion_Rollback_log.sql\n` +
+      `====================================================================`
+    );
+  }
+
+  function simularAuditoria() {
+    const { entorno, feature } = getParams();
+    const destAudit = `D:\\BUSCAR LISTADO EN BBDD\\NOVIEMBRE\\AX\\18\\${feature}`;
+
+    appendLog(`\n<span class="log-sec">==============================================================================</span>`);
+    appendLog(`<span class="log-sec">=== MÓDULO DE AUDITORÍA: EXTRAYENDO OBJETOS DESDE BBDD [${entorno}] ===</span>`);
+    appendLog(`[Ruta Destino Auditoría]: ${destAudit}`);
+    appendLog(` -> Consultando [PACKAGE] PR_ACSEL_POLIZAS.pks en ALL_SOURCE ... <span class="log-ok">[OK]</span>`);
+    appendLog(` -> Consultando [PACKAGE BODY] PR_ACSEL_POLIZAS.pkb en ALL_SOURCE ... <span class="log-ok">[OK]</span>`);
+    appendLog(`<span class="log-ok">[RESUMEN AUDITORÍA BBDD] Analizados: 2 | Exitosos: 2 | Fallidos/Vacíos: 0</span>`);
+
+    abrirModal(
+      `Auditoría Post-Despliegue - Diccionario Oracle (ALL_SOURCE)`,
+      `Extracción silenciosa completada mediante sqlplus -s\n` +
+      `Ruta de comparación: ${destAudit}\n\n` +
+      `Artefactos descargados desde la instancia Oracle:\n` +
+      `  ✔ PR_ACSEL_POLIZAS.pks  (4.2 KB - Coincide 100% con QA)\n` +
+      `  ✔ PR_ACSEL_POLIZAS.pkb  (38.7 KB - Coincide 100% con QA)\n\n` +
+      `Listo para validación de integridad (Diff) entre Calidad y Producción.`
+    );
+  }
+
+  function simularCarpeta() {
+    const { entorno, feature } = getParams();
+    const isQA = entorno === "CALIDAD";
+    const baseDir = isQA 
+      ? `C:\\backup_seguros\\SEGUROS\\INSTALACIONES\\CALIDAD\\2026\\NOVIEMBRE\\AX\\18\\${feature}`
+      : `C:\\backup_seguros\\SEGUROS\\INSTALACIONES\\PRODUCCION\\NOVIEMBRE\\${feature}`;
+
+    abrirModal(
+      `Explorador de Archivos - Estructura Generada`,
+      `📁 ${baseDir}\n` +
+      ` ├── 📄 listado.sql\n` +
+      ` ├── 📄 ${feature}_Script_Tablas.sql\n` +
+      ` ├── 📄 PR_ACSEL_POLIZAS.pks\n` +
+      ` ├── 📄 PR_ACSEL_POLIZAS.pkb\n` +
+      ` ├── ⚙️ SCRIPT_${isQA ? 'QA' : 'PRE'}_NEW.bat\n` +
+      ` ├── 📝 Evidencia_instalacion_log.sql\n` +
+      ` └── 📁 ROLLBACK\n` +
+      `      ├── 📄 listado_rollback.sql\n` +
+      `      ├── 📄 PR_ACSEL_POLIZAS.pks  (Respaldo limpio de Main)\n` +
+      `      ├── 📄 PR_ACSEL_POLIZAS.pkb  (Respaldo limpio de Main)\n` +
+      `      └── ⚙️ SCRIPT_${isQA ? 'QA' : 'PRE'}_ROLL_NEW.bat`
+    );
+  }
+
+  function abrirModal(titulo, contenido) {
+    document.getElementById('modalTitle').textContent = titulo;
+    document.getElementById('modalBody').textContent = contenido;
+    document.getElementById('modalOverlay').style.display = 'flex';
+  }
+
+  function cerrarModal() {
+    document.getElementById('modalOverlay').style.display = 'none';
+  }
+</script>
+</body>
+</html>
