@@ -3,11 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Demo Interactiva - SEGUROS DESPLIEGUES | BBVA Seguros</title>
+<title>Bienvenidos - SEGUROS DESPLIEGUES | BBVA Seguros</title>
 <style>
   :root {
     --navy-bbva: #004481;
     --aqua-bbva: #1464A5;
+    --cyan-glow: #2DCCCD;
     --bg-bbva: #F4F6F8;
     --text-main: #121212;
     --text-white: #FFFFFF;
@@ -33,7 +34,135 @@
     padding: 15px;
   }
 
-  /* Banner superior de Demo */
+  /* ==========================================
+     PANTALLA DE BIENVENIDA (SPLASH SCREEN)
+     ========================================== */
+  .welcome-overlay {
+    position: fixed;
+    inset: 0;
+    background: radial-gradient(circle at center, #072146 0%, #020E21 100%);
+    z-index: 9999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    transition: opacity 0.7s ease, visibility 0.7s ease;
+  }
+
+  .welcome-overlay.hidden {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+  }
+
+  .welcome-card {
+    max-width: 680px;
+    width: 100%;
+    background: rgba(11, 37, 75, 0.85);
+    border: 1px solid rgba(45, 204, 205, 0.45);
+    border-radius: 16px;
+    padding: 28px;
+    text-align: center;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.75), 0 0 30px rgba(45, 204, 205, 0.15);
+    backdrop-filter: blur(8px);
+    animation: fadeInUp 0.8s ease-out;
+  }
+
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .avatar-wrapper {
+    position: relative;
+    width: 100%;
+    max-width: 480px;
+    margin: 0 auto 20px auto;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 2px solid var(--cyan-glow);
+    box-shadow: 0 0 25px rgba(45, 204, 205, 0.35);
+  }
+
+  .avatar-wrapper img {
+    width: 100%;
+    height: auto;
+    display: block;
+    object-fit: cover;
+  }
+
+  .welcome-badge {
+    display: inline-block;
+    background: rgba(45, 204, 205, 0.15);
+    color: var(--cyan-glow);
+    border: 1px solid var(--cyan-glow);
+    padding: 4px 14px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: bold;
+    letter-spacing: 1.5px;
+    margin-bottom: 10px;
+  }
+
+  .welcome-title {
+    color: #FFFFFF;
+    font-size: 28px;
+    font-weight: 800;
+    letter-spacing: 0.5px;
+    margin-bottom: 6px;
+  }
+
+  .welcome-subtitle {
+    color: #B8D4F5;
+    font-size: 14px;
+    margin-bottom: 20px;
+  }
+
+  /* Barra de carga automática */
+  .progress-container {
+    width: 100%;
+    max-width: 380px;
+    height: 6px;
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 10px;
+    margin: 0 auto 18px auto;
+    overflow: hidden;
+  }
+
+  .progress-bar {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, #1464A5, #2DCCCD);
+    border-radius: 10px;
+    animation: loadProgress 3.8s linear forwards;
+  }
+
+  @keyframes loadProgress {
+    0% { width: 0%; }
+    100% { width: 100%; }
+  }
+
+  .btn-enter-demo {
+    background: linear-gradient(90deg, #1464A5 0%, #028484 100%);
+    color: #FFFFFF;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    padding: 12px 28px;
+    font-size: 14px;
+    font-weight: bold;
+    border-radius: 6px;
+    cursor: pointer;
+    letter-spacing: 0.5px;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+
+  .btn-enter-demo:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(45, 204, 205, 0.4);
+  }
+
+  /* ==========================================
+     ESTILOS DEL SIMULADOR PRINCIPAL
+     ========================================== */
   .demo-banner {
     width: 100%;
     max-width: 960px;
@@ -61,7 +190,6 @@
     letter-spacing: 0.5px;
   }
 
-  /* Ventana Principal estilo Tkinter BBVA */
   .app-window {
     width: 100%;
     max-width: 960px;
@@ -72,7 +200,6 @@
     border: 1px solid #C8D2DC;
   }
 
-  /* Encabezado Corporativo */
   .header-frame {
     background-color: var(--navy-bbva);
     padding: 16px 20px;
@@ -101,12 +228,10 @@
     letter-spacing: 1px;
   }
 
-  /* Contenedor principal */
   .main-container {
     padding: 20px;
   }
 
-  /* Fieldset estilo LabelFrame */
   .label-frame {
     border: 1px solid #BCC7D4;
     border-radius: 4px;
@@ -160,11 +285,6 @@
     background: #FFFFFF;
   }
 
-  .feature-input:focus {
-    outline: 2px solid var(--aqua-bbva);
-    border-color: var(--aqua-bbva);
-  }
-
   .btn-primary {
     grid-column: 1 / -1;
     background-color: var(--aqua-bbva);
@@ -183,7 +303,6 @@
     background-color: #0F4F85;
   }
 
-  /* Consola de Logs */
   .console-box {
     width: 100%;
     height: 270px;
@@ -204,7 +323,6 @@
   .log-warn { color: #B45309; font-weight: bold; }
   .log-sec { color: #028484; font-weight: bold; }
 
-  /* Barra de 4 botones inferiores */
   .actions-bar {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -228,20 +346,11 @@
     cursor: not-allowed;
   }
 
-  .action-btn:not(:disabled):hover {
-    opacity: 0.92;
-  }
-
-  .action-btn:not(:disabled):active {
-    transform: scale(0.99);
-  }
-
   .btn-inst { background-color: var(--navy-bbva); }
   .btn-roll { background-color: var(--danger); }
   .btn-audit { background-color: var(--audit); }
   .btn-exit { background-color: var(--secondary); }
 
-  /* Modal visual para simular SQL*Plus o Explorador */
   .modal-overlay {
     display: none;
     position: fixed;
@@ -303,24 +412,43 @@
   }
 
   @media (max-width: 700px) {
-    .actions-bar {
-      grid-template-columns: 1fr 1fr;
-    }
-    .config-grid {
-      grid-template-columns: 1fr;
-    }
+    .actions-bar { grid-template-columns: 1fr 1fr; }
+    .config-grid { grid-template-columns: 1fr; }
+    .welcome-title { font-size: 22px; }
   }
 </style>
 </head>
 <body>
 
+  <!-- ==========================================
+       PANTALLA INICIAL DE BIENVENIDA
+       ========================================== -->
+  <div id="welcomeOverlay" class="welcome-overlay">
+    <div class="welcome-card">
+      <div class="welcome-badge">BBVA SEGUROS • POTENCIA.IA</div>
+      <div class="avatar-wrapper">
+        <img src="avatar_bbva.jpg" alt="Bienvenidos a Seguros Despliegues BBVA">
+      </div>
+      <h1 class="welcome-title">¡BIENVENIDOS!</h1>
+      <p class="welcome-subtitle">SEGUROS DESPLIEGUES — Automatización &amp; Auditoría Inteligente AcselX<br><em>Desarrollado y Gestionado por: Enoides Mejía</em></p>
+      
+      <div class="progress-container">
+        <div class="progress-bar"></div>
+      </div>
+
+      <button class="btn-enter-demo" onclick="entrarADemo()">Ingresar a la Demo Interactiva →</button>
+    </div>
+  </div>
+
+  <!-- ==========================================
+       SIMULADOR PRINCIPAL
+       ========================================== -->
   <div class="demo-banner">
     <div><span class="demo-badge">DEMO INTERACTIVA</span> Simulador funcional para presentación <strong>Potencia.IA</strong> — Sin conexión directa a BBDD productiva.</div>
-    <div><strong>Paso 1:</strong> Pulsa <em>Organizar & Extraer Artefactos</em></div>
+    <div><strong>Paso 1:</strong> Pulsa <em>Organizar &amp; Extraer Artefactos</em></div>
   </div>
 
   <div class="app-window">
-    <!-- ENCABEZADO CORPORATIVO -->
     <div class="header-frame">
       <div class="header-title">SEGUROS DESPLIEGUES</div>
       <div class="header-authors">Desarrollado y Gestionado por: Enoides Mejía</div>
@@ -328,7 +456,6 @@
     </div>
 
     <div class="main-container">
-      <!-- SECCIÓN 1: PARÁMETROS -->
       <fieldset class="label-frame">
         <legend class="label-frame-title"> Parámetros del Despliegue </legend>
         <div class="config-grid">
@@ -347,13 +474,11 @@
         </div>
       </fieldset>
 
-      <!-- SECCIÓN 2: CONSOLA DE LOGS -->
       <fieldset class="label-frame">
         <legend class="label-frame-title"> Consola de Procesamiento &amp; Trazabilidad </legend>
         <div id="consoleOutput" class="console-box">Listo para iniciar. Seleccione el entorno, valide la Feature y presione "Organizar & Extraer Artefactos"...</div>
       </fieldset>
 
-      <!-- SECCIÓN 3: BOTONES DE EJECUCIÓN -->
       <div class="actions-bar">
         <button id="btnInst" class="action-btn btn-inst" disabled onclick="simularInstalacion()">1. Ejecutar INSTALACIÓN</button>
         <button id="btnRoll" class="action-btn btn-roll" disabled onclick="simularRollback()">2. Ejecutar ROLLBACK</button>
@@ -378,8 +503,20 @@
   </div>
 
 <script>
+  // Transición automática de la bienvenida a la demo tras 3.8 segundos
+  const timerBienvenida = setTimeout(() => {
+    entrarADemo();
+  }, 3800);
+
+  function entrarADemo() {
+    clearTimeout(timerBienvenida);
+    const overlay = document.getElementById('welcomeOverlay');
+    if (overlay) {
+      overlay.classList.add('hidden');
+    }
+  }
+
   const consoleEl = document.getElementById('consoleOutput');
-  let procesado = false;
 
   function appendLog(htmlText) {
     consoleEl.innerHTML += htmlText + "\n";
@@ -437,7 +574,6 @@
         document.getElementById('btnInst').disabled = false;
         document.getElementById('btnRoll').disabled = false;
         document.getElementById('btnAudit').disabled = false;
-        procesado = true;
       }
     }, 90);
   }
