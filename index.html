@@ -1610,7 +1610,7 @@
           <div class="micro-pillars">
             <div class="micro-pill">
               <div class="micro-num">3 – 4</div>
-              <div class="micro-txt">Contingencias mayores al año bastan para recuperar cientos de millones.</div>
+              <div class="micro-txt">Contingencias críticas prevenidas al año protegen la continuidad comercial.</div>
             </div>
             <div class="micro-pill">
               <div class="micro-num">30 seg</div>
@@ -1695,8 +1695,8 @@
           </fieldset>
 
           <fieldset class="label-frame">
-            <legend class="label-frame-title"> Consola de control operativo y trazabilidad </legend>
-            <div id="consoleOutput" class="console-box">Listo para iniciar ventana controlada. Seleccione el entorno y pulse "Organizar y blindar artefactos"...</div>
+            <legend class="label-frame-title"> Monitor de validación de entrega entre ambientes </legend>
+            <div id="consoleOutput" class="console-box">Listo para iniciar validación. Seleccione el ambiente y pulse "Validar componentes de la entrega y preparar respaldo seguro"...</div>
           </fieldset>
 
           <div class="actions-bar">
@@ -1729,37 +1729,37 @@
   <div id="noteModalOverlay" class="note-modal-overlay" onclick="if(event.target===this) cerrarNotaEjecutiva()">
     <div class="note-modal-card">
       <div class="note-modal-header">
-        <h3>📌 Ecuación ejecutiva de rentabilidad — Seguros Despliegues</h3>
+        <h3>💎 Resumen ejecutivo de valor — Seguros Despliegues</h3>
         <span style="cursor:pointer; font-size:18px; font-weight:bold;" onclick="cerrarNotaEjecutiva()">✕</span>
       </div>
       <div class="note-modal-body">
         <div style="display:grid; grid-template-columns:repeat(3, 1fr); gap:12px; margin-bottom:18px;">
           <div style="background:#F8FAFC; border:1px solid #DCE4EE; border-top:3px solid #004481; border-radius:6px; padding:12px; text-align:center;">
-            <div style="font-size:20px; font-weight:800; color:#004481;">3 a 4 eventos</div>
-            <div style="font-size:12px; color:#475569; margin-top:3px;">Caídas o crisis anuales evitadas en Seguros</div>
+            <div style="font-size:18px; font-weight:800; color:#004481;">Cero error humano</div>
+            <div style="font-size:12px; color:#475569; margin-top:4px;">Validación exacta entre Calidad y Producción</div>
           </div>
           <div style="background:#F8FAFC; border:1px solid #DCE4EE; border-top:3px solid #028484; border-radius:6px; padding:12px; text-align:center;">
-            <div style="font-size:20px; font-weight:800; color:#028484;">30 segundos</div>
-            <div style="font-size:12px; color:#475569; margin-top:3px;">Reversión limpia a la versión estable</div>
+            <div style="font-size:18px; font-weight:800; color:#028484;">Reversión en 30 s</div>
+            <div style="font-size:12px; color:#475569; margin-top:4px;">Continuidad inmediata sin caídas prolongadas</div>
           </div>
           <div style="background:#F8FAFC; border:1px solid #DCE4EE; border-top:3px solid #198754; border-radius:6px; padding:12px; text-align:center;">
-            <div style="font-size:20px; font-weight:800; color:#198754;">Margen neto</div>
-            <div style="font-size:12px; color:#475569; margin-top:3px;">Cada peso vendido permanece en la compañía</div>
+            <div style="font-size:18px; font-weight:800; color:#198754;">Visión transversal</div>
+            <div style="font-size:12px; color:#475569; margin-top:4px;">Escalable a Aplus, reportes y Evolution</div>
           </div>
         </div>
 
-        <div class="closing-quote-card" style="margin-bottom:18px; padding:20px 24px;">
-          <span class="closing-quote-badge">Síntesis para toma de decisiones</span>
-          <p class="closing-quote-text" style="font-size:15px; line-height:1.6;">
-            Con decenas de actualizaciones anuales en <strong>nuestros aplicativos de seguros</strong>, basta con que <strong>Seguros Despliegues</strong> evite 3 o 4 contingencias críticas al año —eliminando errores humanos al armar cada entrega, validando su correspondencia entre Calidad y Producción o revirtiendo en 30 segundos— para proteger cientos de millones en continuidad comercial y salas de crisis.
+        <div class="closing-quote-card" style="margin-bottom:18px; padding:18px 22px;">
+          <span class="closing-quote-badge">Mensaje clave para toma de decisiones</span>
+          <p class="closing-quote-text" style="font-size:14.8px; line-height:1.58;">
+            Validar automáticamente lo que desplegamos entre ambientes evita errores manuales y mitiga el riesgo de caídas o indisponibilidad en <strong>nuestros aplicativos de seguros</strong>, protegiendo la operación comercial y evitando el desgaste de salas de crisis.
             <br><br>
-            <strong class="highlight-profit">En banca y seguros la rentabilidad no solo se construye con los ingresos por nuevas ventas; eliminar los costos ocultos por afectaciones operativas hace que cada peso facturado se quede realmente en el resultado de la compañía.</strong>
+            <strong class="highlight-profit">En banca y seguros la rentabilidad no solo se construye con nuevas ventas; eliminar los costos ocultos por fallas operativas hace que cada peso facturado permanezca realmente en el resultado del Grupo BBVA.</strong>
           </p>
         </div>
 
         <div class="thanks-banner" style="padding:18px 22px;">
           <h2 style="font-size:22px;">¡Muchas gracias por su tiempo y confianza!</h2>
-          <p style="margin-bottom:6px; font-size:13.5px;">Quedo atento a sus preguntas para seguir generando valor en BBVA Seguros y el Holding.</p>
+          <p style="margin-bottom:6px; font-size:13.5px;">Quedo atento a sus preguntas para seguir generando valor en BBVA Seguros y el Grupo BBVA.</p>
           <div class="thanks-signature">Enoides Mejía • BBVA Seguros Colombia</div>
         </div>
       </div>
@@ -1947,95 +1947,121 @@
 
   function simularInstalacion() {
     const { entorno, feature } = getParams();
-    const isQA = entorno === "CALIDAD";
-    const varPass = isQA ? "PASS_ACSEL_QA" : "PASS_ACSEL_PR";
-    const sid = isQA ? "ACSELPRB" : "acselx_d";
 
-    appendLog(`\n<span class="log-info">[EJECUCIÓN CONTROLADA]</span> Aplicando entrega en ${entorno}...`);
+    appendLog(`
+<span class="log-info">[PASO CONTROLADO]</span> Desplegando actualización validada en ${entorno}...`);
 
     abrirModal(
-      `Ejecución segura - SCRIPT_${isQA ? 'QA' : 'PRE'}_NEW.bat [${feature}]`,
-      `=========================================================\n` +
-      `Despliegue controlado en ambiente de ${entorno}\n` +
-      `=========================================================\n` +
-      `[SEGURIDAD] Autenticación cifrada mediante variable corporativa %${varPass}%\n` +
-      `Destino: ACSELPRB/********@//82.250.92.162:1521/${sid}\n\n` +
-      `SQL> @listado.sql\n` +
-      `  ✔ ${feature}_Script_Tablas.sql ... Aplicado correctamente.\n` +
-      `  ✔ PR_ACSEL_POLIZAS.pks ... Compilado sin errores.\n` +
-      `  ✔ PR_ACSEL_POLIZAS.pkb ... Compilado sin errores.\n\n` +
-      `[EVIDENCIA DE AUDITORÍA] Archivo generado: Evidencia_instalacion_log.sql\n` +
+      `Despliegue validado sin errores humanos — ${entorno} [${feature}]`,
+      `=========================================================
+` +
+      `Actualización controlada en ambiente de ${entorno}
+` +
+      `=========================================================
+` +
+      `✔ Verificación previa superada: todos los componentes completos.
+` +
+      `✔ Correspondencia validada frente al paquete certificado.
+
+` +
+      `Aplicando componentes del cambio comercial (${feature}):
+` +
+      `  • Estructura de datos .............. Actualizada correctamente
+` +
+      `  • Definición de reglas de pólizas .. Aplicada sin errores
+` +
+      `  • Lógica operativa de emisión ...... Activa y disponible
+
+` +
+      `[RESULTADO] Aplicativo disponible al 100% sin interrupción del servicio.
+` +
       `=========================================================`
     );
   }
 
   function simularRollback() {
     const { entorno, feature } = getParams();
-    if (!confirm(`¿Activar protocolo de retorno inmediato (Rollback) para ${feature} en ${entorno}?`)) return;
+    if (!confirm(`¿Activar reversión inmediata a la versión estable anterior para ${feature} en ${entorno}?`)) return;
 
-    const isQA = entorno === "CALIDAD";
-    const varPass = isQA ? "PASS_ACSEL_QA" : "PASS_ACSEL_PR";
-    const sid = isQA ? "ACSELPRB" : "acselx_d";
-
-    appendLog(`\n<span class="log-warn">[CONTINGENCIA ACTIVADA]</span> Restaurando operación estable desde Main en segundos...`);
+    appendLog(`
+<span class="log-warn">[REVERSIÓN INMEDIATA]</span> Restaurando versión estable previa en menos de 30 segundos...`);
 
     abrirModal(
-      `Reacción inmediata - SCRIPT_${isQA ? 'QA' : 'PRE'}_ROLL_NEW.bat [${feature}]`,
-      `====================================================================\n` +
-      `PROTOCOLO DE CONTINUIDAD OPERATIVA - ROLLBACK ${entorno}\n` +
-      `====================================================================\n` +
-      `[PROTECCIÓN DEL NEGOCIO] Evitando indisponibilidad prolongada en canales.\n` +
-      `Destino: ACSELPRB/********@//82.250.92.162:1521/${sid}\n\n` +
-      `SQL> @listado_rollback.sql\n` +
-      `  ✔ PR_ACSEL_POLIZAS.pks restaurado a versión certificada Main.\n` +
-      `  ✔ PR_ACSEL_POLIZAS.pkb restaurado a versión certificada Main.\n\n` +
-      `[SERVICIO RESTABLECIDO] Operación normalizada en menos de 30 segundos.\n` +
-      `Evidencia oficial: Evidencia_instalacion_Rollback_log.sql\n` +
+      `Reversión limpia y recuperación del servicio — ${entorno} [${feature}]`,
+      `====================================================================
+` +
+      `PROTECCIÓN DE CONTINUIDAD DEL NEGOCIO — ${entorno}
+` +
+      `====================================================================
+` +
+      `Objetivo: evitar caídas o indisponibilidad en canales de venta y atención.
+
+` +
+      `Restaurando respaldo oficial preparado antes de la ventana:
+` +
+      `  ✔ Reglas de emisión restauradas a su versión estable anterior.
+` +
+      `  ✔ Lógica operativa restablecida sin intervención manual.
+
+` +
+      `[SERVICIO NORMALIZADO] Aplicativo operativo en menos de 30 segundos,
+` +
+      `evitando salas de crisis y afectaciones comerciales.
+` +
       `====================================================================`
     );
   }
 
   function simularAuditoria() {
     const { entorno, feature } = getParams();
-    const destAudit = `D:\\BUSCAR LISTADO EN BBDD\\NOVIEMBRE\\AX\\25\\${feature}`;
 
-    appendLog(`\n<span class="log-sec">=== AUDITORÍA AUTOMÁTICA DE INTEGRIDAD EN [${entorno}] ===</span>`);
-    appendLog(` -> Verificando PR_ACSEL_POLIZAS.pks directamente en motor Oracle ... <span class="log-ok">[CERTIFICADO]</span>`);
-    appendLog(` -> Verificando PR_ACSEL_POLIZAS.pkb directamente en motor Oracle ... <span class="log-ok">[CERTIFICADO]</span>`);
-    appendLog(`<span class="log-ok">[RESULTADO] 100% de correspondencia entre Calidad y Producción. Cero riesgo de incidencia post-paso.</span>`);
+    appendLog(`
+<span class="log-sec">=== COMPARACIÓN AUTOMÁTICA CALIDAD VS. [${entorno}] ===</span>`);
+    appendLog(` -> Comparando componentes instalados frente a Calidad ... <span class="log-ok">[100% IDÉNTICOS]</span>`);
+    appendLog(`<span class="log-ok">[RESULTADO] Lo desplegado coincide exactamente con lo probado. Cero riesgo de caída por diferencias.</span>`);
 
     abrirModal(
-      `Certificación de integridad post-despliegue (${entorno})`,
-      `Validación directa contra catálogo Oracle (ALL_SOURCE)\n` +
-      `Repositorio de evidencia: ${destAudit}\n\n` +
-      `Estado de componentes críticos del negocio:\n` +
-      `  ✔ PR_ACSEL_POLIZAS.pks  — Íntegro (sin diferencias frente a Calidad)\n` +
-      `  ✔ PR_ACSEL_POLIZAS.pkb  — Íntegro (sin diferencias frente a Calidad)\n\n` +
-      `Beneficio directo: se descartan fallas ocultas antes de abrir la operación comercial.`
+      `Verificación entre ambientes: Calidad vs. ${entorno}`,
+      `Comparación automática post-despliegue (${feature})
+` +
+      `------------------------------------------------------------------
+` +
+      `Estado de los componentes desplegados en el aplicativo:
+
+` +
+      `  ✔ Definición de reglas de pólizas — Idéntico a Calidad (0 diferencias)
+` +
+      `  ✔ Lógica operativa de emisión     — Idéntico a Calidad (0 diferencias)
+
+` +
+      `Valor para el negocio: se garantiza que no subió ninguna pieza incompleta
+` +
+      `o distinta que pueda generar indisponibilidad al abrir la operación.`
     );
   }
 
   function simularCarpeta() {
     const { entorno, feature } = getParams();
-    const isQA = entorno === "CALIDAD";
-    const baseDir = isQA 
-      ? `C:\\backup_seguros\\SEGUROS\\INSTALACIONES\\CALIDAD\\2026\\NOVIEMBRE\\AX\\25\\${feature}`
-      : `C:\\backup_seguros\\SEGUROS\\INSTALACIONES\\PRODUCCION\\NOVIEMBRE\\${feature}`;
 
     abrirModal(
-      `Gobierno y trazabilidad de evidencias`,
-      `📁 ${baseDir}\n` +
-      ` ├── 📄 listado.sql\n` +
-      ` ├── 📄 ${feature}_Script_Tablas.sql\n` +
-      ` ├── 📄 PR_ACSEL_POLIZAS.pks\n` +
-      ` ├── 📄 PR_ACSEL_POLIZAS.pkb\n` +
-      ` ├── ⚙️ SCRIPT_${isQA ? 'QA' : 'PRE'}_NEW.bat\n` +
-      ` ├── 📝 Evidencia_instalacion_log.sql  (soporte de auditoría)\n` +
-      ` └── 📁 ROLLBACK  (cápsula de contingencia lista)\n` +
-      `      ├── 📄 listado_rollback.sql\n` +
-      `      ├── 📄 PR_ACSEL_POLIZAS.pks  (respaldo oficial Main)\n` +
-      `      ├── 📄 PR_ACSEL_POLIZAS.pkb  (respaldo oficial Main)\n` +
-      `      └── ⚙️ SCRIPT_${isQA ? 'QA' : 'PRE'}_ROLL_NEW.bat`
+      `Paquete de entrega organizado automáticamente (${entorno})`,
+      `📁 Entrega_${feature}_${entorno}
+` +
+      ` ├── 📄 Guia_de_entrega_validada.txt
+` +
+      ` ├── 📄 ${feature}_Estructura_Datos.sql
+` +
+      ` ├── 📄 Reglas_Emision_Polizas (definición)
+` +
+      ` ├── 📄 Reglas_Emision_Polizas (lógica de negocio)
+` +
+      ` ├── 📝 Registro_de_validacion_exitosa.log
+` +
+      ` └── 📁 RESPALDO_VERSION_ESTABLE  (listo antes de desplegar)
+` +
+      `      ├── 📄 Guia_de_reversion_inmediata.txt
+` +
+      `      └── 📄 Reglas_Emision_Polizas (versión estable previa)`
     );
   }
 
