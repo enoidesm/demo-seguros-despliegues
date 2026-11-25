@@ -845,6 +845,168 @@
     opacity: 0.95;
   }
 
+  
+  /* =========================================================
+     ESTILOS PARA LÁMINA FINAL Y MODAL DE NOTA EJECUTIVA
+     ========================================================= */
+  .tab-btn.gold-btn {
+    background: linear-gradient(90deg, #028484 0%, #198754 100%);
+    color: #FFFFFF;
+    border: 1px solid rgba(255, 255, 255, 0.45);
+    font-weight: 700;
+  }
+
+  .tab-btn.gold-btn:hover {
+    opacity: 0.94;
+    background: linear-gradient(90deg, #026E6E 0%, #146C43 100%);
+  }
+
+  .btn-inline-note {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 10px;
+    background: #FFFFFF;
+    color: var(--navy-bbva);
+    border: 1px solid var(--navy-bbva);
+    padding: 7px 14px;
+    border-radius: 5px;
+    font-size: 12.5px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .btn-inline-note:hover {
+    background: var(--navy-bbva);
+    color: #FFFFFF;
+  }
+
+  .closing-quote-card {
+    background: linear-gradient(135deg, #F8FAFC 0%, #EFF6FF 100%);
+    border: 1px solid #BFDBFE;
+    border-left: 6px solid var(--navy-bbva);
+    border-radius: 10px;
+    padding: 26px 30px;
+    box-shadow: 0 8px 24px rgba(0, 45, 87, 0.08);
+    margin-bottom: 22px;
+    position: relative;
+  }
+
+  .closing-quote-badge {
+    display: inline-block;
+    background: var(--navy-bbva);
+    color: #FFFFFF;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    padding: 4px 12px;
+    border-radius: 20px;
+    margin-bottom: 14px;
+  }
+
+  .closing-quote-text {
+    font-size: 16px;
+    line-height: 1.68;
+    color: #1E293B;
+  }
+
+  .closing-quote-text strong.highlight-profit {
+    color: var(--navy-bbva);
+    background: rgba(20, 100, 165, 0.09);
+    padding: 2px 4px;
+    border-radius: 4px;
+  }
+
+  .thanks-banner {
+    background: linear-gradient(135deg, #003366 0%, #004481 60%, #028484 100%);
+    color: #FFFFFF;
+    border-radius: 10px;
+    padding: 24px 28px;
+    text-align: center;
+    box-shadow: 0 10px 26px rgba(0, 34, 68, 0.18);
+  }
+
+  .thanks-banner h2 {
+    font-size: 26px;
+    font-weight: 800;
+    margin-bottom: 6px;
+    letter-spacing: 0.4px;
+  }
+
+  .thanks-banner p {
+    font-size: 14.5px;
+    color: #E2EEFA;
+    margin-bottom: 12px;
+    line-height: 1.5;
+  }
+
+  .thanks-signature {
+    font-size: 13.5px;
+    color: #A8D5FF;
+    font-weight: 600;
+  }
+
+  /* Modal especial de lectura ejecutiva (Nota y Cierre) */
+  .note-modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 22, 48, 0.72);
+    backdrop-filter: blur(5px);
+    justify-content: center;
+    align-items: center;
+    padding: 18px;
+    z-index: 250;
+    animation: fadeIn 0.25s ease-out;
+  }
+
+  .note-modal-overlay.active {
+    display: flex;
+  }
+
+  .note-modal-card {
+    background: #FFFFFF;
+    width: 100%;
+    max-width: 760px;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 22px 55px rgba(0, 0, 0, 0.45);
+    border: 1px solid #CBD5E1;
+  }
+
+  .note-modal-header {
+    background: linear-gradient(90deg, var(--navy-dark) 0%, var(--navy-bbva) 100%);
+    color: #FFFFFF;
+    padding: 16px 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .note-modal-header h3 {
+    font-size: 17px;
+    font-weight: 700;
+  }
+
+  .note-modal-body {
+    padding: 26px 28px;
+    max-height: 80vh;
+    overflow-y: auto;
+  }
+
+  .note-modal-footer {
+    background: #F8FAFC;
+    border-top: 1px solid #E2E8F0;
+    padding: 12px 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
   /* MODAL SIMULADOR */
   .modal-overlay {
     display: none;
@@ -937,11 +1099,12 @@
   <nav class="top-nav">
     <div class="brand-pill">
       <span class="bbva-tag">Iniciativa IA</span>
-      <span class="brand-title">BBVA SEGUROS | SEGUROS DESPLIEGUES</span>
+      <span class="brand-title">BBVA Seguros y Holding | SEGUROS DESPLIEGUES</span>
     </div>
     <div class="mode-tabs">
       <button id="tabPitch" class="tab-btn active" onclick="cambiarModo('pitch')">1. Caso de negocio</button>
       <button id="tabDemo" class="tab-btn" onclick="cambiarModo('demo')">2. Demo en vivo (simulador)</button>
+      <button id="tabNote" class="tab-btn gold-btn" onclick="abrirNotaEjecutiva()">📌 Nota final y gracias</button>
     </div>
   </nav>
 
@@ -957,7 +1120,7 @@
             <div id="slideKicker" class="slide-step-tag">Visión ejecutiva — continuidad del negocio asegurador</div>
             <div id="slideTitle" class="slide-main-title">Blindaje operativo y mitigación de contingencias en Producción</div>
           </div>
-          <div id="slideCounter" class="slide-counter">1 / 4</div>
+          <div id="slideCounter" class="slide-counter">1 / 5</div>
         </div>
 
         <!-- LÁMINA 1: PORTADA Y PROPÓSITO DE NEGOCIO -->
@@ -1048,7 +1211,7 @@
                     <span>Impacto estimado por hora de afectación / crisis:</span>
                     <span class="slider-val" id="valCostoHora">$15M COP</span>
                   </div>
-                  <input type="range" id="rangeCostoHora" min="0" max="500" step="10" value="20" oninput="actualizarSimuladorImpacto()">
+                  <input type="range" id="rangeCostoHora" min="0" max="500" step="5" value="10" oninput="actualizarSimuladorImpacto()">
                 </div>
 
                 <div class="slider-group">
@@ -1072,6 +1235,9 @@
                 <div class="calc-result-title">Exposición económica mitigada (según escenario simulado)</div>
                 <div class="calc-result-number" id="valTotalMitigado">$180.000.000 COP / año</div>
                 <div class="calc-result-sub">Con una solución desarrollada internamente a <strong>$0 COP en licencias</strong></div>
+              </div>
+              <div style="text-align:center;">
+                <button class="btn-inline-note" onclick="abrirNotaEjecutiva()">📖 Leer nota ejecutiva completa sobre rentabilidad</button>
               </div>
             </div>
           </div>
@@ -1135,6 +1301,28 @@
           </div>
         </div>
 
+
+        <!-- LÁMINA 5: REFLEXIÓN FINAL Y AGRADECIMIENTO AL JURADO -->
+        <div class="slide-body" data-kicker="4. Reflexión ejecutiva y cierre" data-title="Proteger la operación también construye rentabilidad">
+          <div class="closing-quote-card">
+            <span class="closing-quote-badge">Mensaje clave para el negocio y el Holding</span>
+            <p class="closing-quote-text">
+              «Aquí hablamos de cuántos incidentes mayores o pasos fallidos evitamos en todo el año. Con decenas de entregas anuales en <strong>AcselX</strong>, basta con que <strong>SEGUROS DESPLIEGUES</strong> nos evite solo 3 o 4 emergencias críticas en todo el año —ya sea porque blindó el paquete antes de subir, auditó que quedara idéntico a Calidad, o nos permitió ejecutar el Rollback limpio en 30 segundos— para proteger cientos de millones en continuidad comercial y horas de salas de crisis.
+              <br><br>
+              <strong class="highlight-profit">Porque en el negocio asegurador y bancario la rentabilidad no solo se construye con los ingresos que entran por nuevas ventas; otra forma directa y poderosa de generar ganancias es eliminar los costos ocultos por afectaciones operativas, haciendo que cada peso facturado realmente se quede en el resultado de la compañía.</strong>»
+            </p>
+          </div>
+
+          <div class="thanks-banner">
+            <h2>¡Muchas gracias a todos!</h2>
+            <p>Gracias al jurado, a los líderes del Holding y a BBVA Seguros Colombia por impulsar espacios donde la inteligencia artificial se convierte en soluciones reales para proteger y potenciar nuestro negocio.</p>
+            <div class="thanks-signature">Enoides Mejía • SEGUROS DESPLIEGUES — BBVA Seguros</div>
+            <div style="margin-top:16px;">
+              <button class="btn-launch-demo" onclick="cambiarModo('demo')">Pasar a la demo interactiva en vivo →</button>
+            </div>
+          </div>
+        </div>
+
         <!-- PIE DE CONTROLES DE LA PRESENTACIÓN -->
         <div class="deck-footer">
           <div class="dots-nav" id="dotsContainer">
@@ -1142,6 +1330,7 @@
             <button class="dot" onclick="irASlide(1)" title="Riesgo operativo"></button>
             <button class="dot" onclick="irASlide(2)" title="Impacto económico"></button>
             <button class="dot" onclick="irASlide(3)" title="Escalabilidad"></button>
+            <button class="dot" onclick="irASlide(4)" title="Reflexión final y gracias"></button>
           </div>
           <div class="nav-arrows">
             <button id="btnPrev" class="btn-nav outline" onclick="moverSlide(-1)" disabled>← Anterior</button>
@@ -1157,7 +1346,8 @@
     <section id="viewDemo" class="view-section">
       <div class="demo-banner">
         <div><span class="demo-badge">DEMO EN VIVO</span> Simulador funcional <strong>SEGUROS DESPLIEGUES</strong> — Prevención de errores, retorno inmediato y auditoría en base de datos.</div>
-        <div style="display:flex; gap:14px; align-items:center;">
+        <div style="display:flex; gap:14px; align-items:center; flex-wrap:wrap;">
+          <a href="javascript:void(0)" onclick="abrirNotaEjecutiva()" style="color:var(--success); font-weight:800; text-decoration:none;">📌 Ver nota final y agradecimiento</a>
           <a href="javascript:void(0)" onclick="mostrarBienvenidaDemo()" style="color:var(--audit); font-weight:700; text-decoration:none;">★ Ver portada</a>
           <a href="javascript:void(0)" onclick="cambiarModo('pitch')" style="color:var(--navy-bbva); font-weight:700; text-decoration:none;">← Volver al caso de negocio</a>
         </div>
@@ -1219,6 +1409,37 @@
       </div>
     </div>
   </div>
+
+  <!-- MODAL EJECUTIVO DE LECTURA: NOTA DE RENTABILIDAD Y AGRADECIMIENTO -->
+  <div id="noteModalOverlay" class="note-modal-overlay" onclick="if(event.target===this) cerrarNotaEjecutiva()">
+    <div class="note-modal-card">
+      <div class="note-modal-header">
+        <h3>📌 Reflexión ejecutiva de cierre — SEGUROS DESPLIEGUES</h3>
+        <span style="cursor:pointer; font-size:18px; font-weight:bold;" onclick="cerrarNotaEjecutiva()">✕</span>
+      </div>
+      <div class="note-modal-body">
+        <div class="closing-quote-card" style="margin-bottom:18px;">
+          <span class="closing-quote-badge">Rentabilidad a través del control operativo</span>
+          <p class="closing-quote-text">
+            «Aquí hablamos de cuántos incidentes mayores o pasos fallidos evitamos en todo el año. Con decenas de entregas anuales en <strong>AcselX</strong>, basta con que <strong>SEGUROS DESPLIEGUES</strong> nos evite solo 3 o 4 emergencias críticas en todo el año —ya sea porque blindó el paquete antes de subir, auditó que quedara idéntico a Calidad, o nos permitió ejecutar el Rollback limpio en 30 segundos— para proteger cientos de millones en continuidad comercial y horas de salas de crisis.
+            <br><br>
+            <strong class="highlight-profit">Porque en el negocio asegurador y bancario la rentabilidad no solo se construye con los ingresos que entran por nuevas ventas; otra forma directa y poderosa de generar ganancias es eliminar los costos ocultos por afectaciones operativas, haciendo que cada peso facturado realmente se quede en el resultado de la compañía.</strong>»
+          </p>
+        </div>
+
+        <div class="thanks-banner" style="padding:20px 24px;">
+          <h2 style="font-size:24px;">¡Muchas gracias a todos por su atención!</h2>
+          <p style="margin-bottom:8px;">Quedo atento a sus preguntas y comentarios para seguir sumando valor a BBVA Seguros y al Holding.</p>
+          <div class="thanks-signature">Enoides Mejía • BBVA Seguros Colombia</div>
+        </div>
+      </div>
+      <div class="note-modal-footer">
+        <span style="font-size:12.5px; color:#64748B;">Puede presionar <strong>Esc</strong> o el botón para volver a la vista actual.</span>
+        <button class="btn-nav" onclick="cerrarNotaEjecutiva()">Cerrar lectura</button>
+      </div>
+    </div>
+  </div>
+
 
 <script>
   // ==========================================
@@ -1496,6 +1717,21 @@
   function cerrarModal() {
     document.getElementById('modalOverlay').style.display = 'none';
   }
+
+  function abrirNotaEjecutiva() {
+    document.getElementById('noteModalOverlay').classList.add('active');
+  }
+
+  function cerrarNotaEjecutiva() {
+    document.getElementById('noteModalOverlay').classList.remove('active');
+  }
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      cerrarNotaEjecutiva();
+      cerrarModal();
+    }
+  });
 </script>
 </body>
 </html>
