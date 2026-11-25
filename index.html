@@ -2098,4 +2098,15 @@
   }
 
   function cerrarNotaEjecutiva() {
-    document.getElementB
+    document.getElementById('noteModalOverlay').classList.remove('active');
+  }
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      cerrarNotaEjecutiva();
+      cerrarModal();
+    }
+  });
+</script>
+</body>
+</html>
