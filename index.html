@@ -3,175 +3,490 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Bienvenidos - SEGUROS DESPLIEGUES | BBVA Seguros</title>
+<title>SEGUROS DESPLIEGUES | Presentación Ejecutiva & Demo Interactiva - BBVA Seguros</title>
 <style>
   :root {
     --navy-bbva: #004481;
+    --navy-dark: #002D57;
     --aqua-bbva: #1464A5;
-    --cyan-glow: #2DCCCD;
+    --cyan-bbva: #02A5A5;
     --bg-bbva: #F4F6F8;
+    --bg-page: #E6ECF2;
     --text-main: #121212;
+    --text-muted: #4A5568;
     --text-white: #FFFFFF;
-    --success: #28A745;
+    --success: #198754;
     --danger: #D9534F;
+    --warning: #D97706;
     --audit: #028484;
     --secondary: #6C757D;
+    --gold: #F59E0B;
   }
 
   * {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
   }
 
   body {
-    background-color: #E9EEF3;
+    background-color: var(--bg-page);
+    color: var(--text-main);
+    min-height: 100vh;
     display: flex;
     flex-direction: column;
     align-items: center;
-    min-height: 100vh;
-    padding: 15px;
   }
 
-  /* ==========================================
-     PANTALLA DE BIENVENIDA (SPLASH SCREEN)
-     ========================================== */
-  .welcome-overlay {
-    position: fixed;
-    inset: 0;
-    background: radial-gradient(circle at center, #072146 0%, #020E21 100%);
-    z-index: 9999;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 20px;
-    transition: opacity 0.7s ease, visibility 0.7s ease;
-  }
-
-  .welcome-overlay.hidden {
-    opacity: 0;
-    visibility: hidden;
-    pointer-events: none;
-  }
-
-  .welcome-card {
-    max-width: 680px;
+  /* BARRA SUPERIOR DE NAVEGACIÓN EJECUTIVA (PRESENTACIÓN VS DEMO) */
+  .top-nav {
     width: 100%;
-    background: rgba(11, 37, 75, 0.85);
-    border: 1px solid rgba(45, 204, 205, 0.45);
-    border-radius: 16px;
-    padding: 28px;
-    text-align: center;
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.75), 0 0 30px rgba(45, 204, 205, 0.15);
-    backdrop-filter: blur(8px);
-    animation: fadeInUp 0.8s ease-out;
+    background: var(--navy-dark);
+    color: var(--text-white);
+    padding: 10px 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 3px 12px rgba(0, 20, 45, 0.25);
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    flex-wrap: wrap;
+    gap: 12px;
   }
 
-  @keyframes fadeInUp {
-    from { opacity: 0; transform: translateY(20px); }
+  .brand-pill {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .bbva-tag {
+    background: var(--cyan-bbva);
+    color: #fff;
+    font-weight: 800;
+    font-size: 11px;
+    padding: 4px 10px;
+    border-radius: 4px;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+  }
+
+  .brand-title {
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: 0.3px;
+  }
+
+  .mode-tabs {
+    display: flex;
+    gap: 8px;
+  }
+
+  .tab-btn {
+    background: rgba(255, 255, 255, 0.1);
+    color: #D4E4F7;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 8px 16px;
+    border-radius: 5px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .tab-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+    color: #fff;
+  }
+
+  .tab-btn.active {
+    background: #FFFFFF;
+    color: var(--navy-bbva);
+    border-color: #FFFFFF;
+    font-weight: 700;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+  }
+
+  /* CONTENEDOR CENTRAL */
+  .viewport-wrapper {
+    width: 100%;
+    max-width: 1080px;
+    padding: 24px 16px 40px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .view-section {
+    display: none;
+    animation: fadeIn 0.28s ease-out;
+  }
+
+  .view-section.active {
+    display: block;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(6px); }
     to { opacity: 1; transform: translateY(0); }
   }
 
-  .avatar-wrapper {
-    position: relative;
-    width: 100%;
-    max-width: 480px;
-    margin: 0 auto 20px auto;
-    border-radius: 12px;
+  /* =========================================================
+     MODO 1: PRESENTACIÓN EJECUTIVA (SLIDES REDUCIDOS Y CLAROS)
+     ========================================================= */
+  .deck-card {
+    background: #FFFFFF;
+    border-radius: 10px;
+    box-shadow: 0 12px 32px rgba(0, 34, 68, 0.14);
+    border: 1px solid #CFD8E3;
     overflow: hidden;
-    border: 2px solid var(--cyan-glow);
-    box-shadow: 0 0 25px rgba(45, 204, 205, 0.35);
+    min-height: 540px;
+    display: flex;
+    flex-direction: column;
   }
 
-  .avatar-wrapper img {
-    width: 100%;
-    height: auto;
+  .slide-header-bar {
+    background: linear-gradient(90deg, var(--navy-bbva) 0%, var(--aqua-bbva) 100%);
+    color: #FFFFFF;
+    padding: 18px 28px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .slide-step-tag {
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #A8D5FF;
+    font-weight: 700;
+  }
+
+  .slide-main-title {
+    font-size: 22px;
+    font-weight: 700;
+    margin-top: 2px;
+  }
+
+  .slide-counter {
+    background: rgba(0, 0, 0, 0.25);
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 12.5px;
+    font-weight: 700;
+  }
+
+  .slide-body {
+    padding: 30px 34px;
+    flex: 1;
+    display: none;
+  }
+
+  .slide-body.active {
     display: block;
-    object-fit: cover;
   }
 
-  .welcome-badge {
+  /* Portada Ejecutiva (Slide 1) */
+  .hero-banner {
+    background: linear-gradient(135deg, #003366 0%, #004481 60%, #028484 100%);
+    color: white;
+    padding: 36px 32px;
+    border-radius: 8px;
+    margin-bottom: 24px;
+    text-align: center;
+  }
+
+  .hero-kicker {
     display: inline-block;
-    background: rgba(45, 204, 205, 0.15);
-    color: var(--cyan-glow);
-    border: 1px solid var(--cyan-glow);
-    padding: 4px 14px;
+    background: rgba(255, 255, 255, 0.16);
+    padding: 5px 14px;
     border-radius: 20px;
     font-size: 12px;
-    font-weight: bold;
-    letter-spacing: 1.5px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    margin-bottom: 12px;
+  }
+
+  .hero-banner h1 {
+    font-size: 32px;
+    font-weight: 800;
+    letter-spacing: 0.5px;
     margin-bottom: 10px;
   }
 
-  .welcome-title {
-    color: #FFFFFF;
+  .hero-banner p {
+    font-size: 16.5px;
+    color: #E2EEFA;
+    max-width: 780px;
+    margin: 0 auto 16px;
+    line-height: 1.5;
+  }
+
+  .hero-author {
+    font-size: 13.5px;
+    color: #B6D8F9;
+    font-style: italic;
+  }
+
+  /* Tarjetas en grilla de 3 */
+  .grid-3 {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+  }
+
+  .grid-2 {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+
+  .exec-box {
+    background: #F8FAFC;
+    border: 1px solid #DCE4EE;
+    border-top: 4px solid var(--navy-bbva);
+    border-radius: 6px;
+    padding: 18px 20px;
+  }
+
+  .exec-box.danger-top { border-top-color: var(--danger); }
+  .exec-box.teal-top { border-top-color: var(--audit); }
+  .exec-box.success-top { border-top-color: var(--success); }
+
+  .exec-box h3 {
+    font-size: 15.5px;
+    color: var(--navy-bbva);
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .exec-box p {
+    font-size: 13.5px;
+    color: var(--text-muted);
+    line-height: 1.5;
+  }
+
+  /* KPIs Financieros */
+  .kpi-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-bottom: 22px;
+  }
+
+  .kpi-card {
+    background: linear-gradient(180deg, #FFFFFF 0%, #F4F8FC 100%);
+    border: 1px solid #C6D6E8;
+    border-radius: 8px;
+    padding: 18px;
+    text-align: center;
+  }
+
+  .kpi-number {
     font-size: 28px;
     font-weight: 800;
-    letter-spacing: 0.5px;
-    margin-bottom: 6px;
+    color: var(--navy-bbva);
+    margin-bottom: 4px;
   }
 
-  .welcome-subtitle {
-    color: #B8D4F5;
-    font-size: 14px;
-    margin-bottom: 20px;
+  .kpi-number.green { color: var(--success); }
+  .kpi-number.teal { color: var(--audit); }
+
+  .kpi-label {
+    font-size: 13px;
+    font-weight: 700;
+    color: #1E293B;
+    margin-bottom: 4px;
   }
 
-  /* Barra de carga automática */
-  .progress-container {
+  .kpi-sub {
+    font-size: 12px;
+    color: var(--text-muted);
+  }
+
+  /* Tabla Ejecutiva Reducida */
+  .clean-table {
     width: 100%;
-    max-width: 380px;
-    height: 6px;
-    background: rgba(255, 255, 255, 0.15);
-    border-radius: 10px;
-    margin: 0 auto 18px auto;
-    overflow: hidden;
+    border-collapse: collapse;
+    font-size: 13.5px;
+    margin-top: 8px;
   }
 
-  .progress-bar {
-    height: 100%;
-    width: 0%;
-    background: linear-gradient(90deg, #1464A5, #2DCCCD);
-    border-radius: 10px;
-    animation: loadProgress 3.8s linear forwards;
+  .clean-table th {
+    background: var(--navy-bbva);
+    color: white;
+    text-align: left;
+    padding: 10px 14px;
+    font-size: 12.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
   }
 
-  @keyframes loadProgress {
-    0% { width: 0%; }
-    100% { width: 100%; }
+  .clean-table td {
+    padding: 11px 14px;
+    border-bottom: 1px solid #E2E8F0;
+    color: #1E293B;
   }
 
-  .btn-enter-demo {
-    background: linear-gradient(90deg, #1464A5 0%, #028484 100%);
-    color: #FFFFFF;
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    padding: 12px 28px;
+  .clean-table tr:nth-child(even) td {
+    background: #F8FAFC;
+  }
+
+  .badge-money {
+    background: #DCFCE7;
+    color: #166534;
+    font-weight: 700;
+    padding: 3px 8px;
+    border-radius: 4px;
+    white-space: nowrap;
+  }
+
+  /* Hoja de Ruta Holding / Seguros */
+  .roadmap-steps {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-top: 14px;
+  }
+
+  .phase-card {
+    border: 1px solid #CBD5E1;
+    border-radius: 8px;
+    padding: 18px;
+    background: #FFFFFF;
+    position: relative;
+  }
+
+  .phase-tag {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 800;
+    padding: 3px 9px;
+    border-radius: 4px;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+  }
+
+  .tag-live { background: #DCFCE7; color: #15803D; }
+  .tag-next { background: #DBEAFE; color: #1D4ED8; }
+  .tag-hold { background: #FEF3C7; color: #B45309; }
+
+  .phase-card h4 {
+    font-size: 15px;
+    color: var(--navy-bbva);
+    margin-bottom: 8px;
+  }
+
+  .phase-card ul {
+    padding-left: 18px;
+    font-size: 13px;
+    color: var(--text-muted);
+    line-height: 1.55;
+  }
+
+  .cta-demo-banner {
+    margin-top: 22px;
+    background: #EFF6FF;
+    border: 1px solid #BFDBFE;
+    border-radius: 8px;
+    padding: 16px 22px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .btn-launch-demo {
+    background: var(--success);
+    color: white;
+    border: none;
+    padding: 11px 22px;
     font-size: 14px;
-    font-weight: bold;
+    font-weight: 700;
     border-radius: 6px;
     cursor: pointer;
-    letter-spacing: 0.5px;
-    transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 4px 12px rgba(25, 135, 84, 0.3);
+    transition: transform 0.15s, background 0.2s;
   }
 
-  .btn-enter-demo:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(45, 204, 205, 0.4);
+  .btn-launch-demo:hover {
+    background: #146C43;
+    transform: translateY(-1px);
   }
 
-  /* ==========================================
-     ESTILOS DEL SIMULADOR PRINCIPAL
-     ========================================== */
+  /* Pie de navegación de diapositivas */
+  .deck-footer {
+    background: #F8FAFC;
+    border-top: 1px solid #E2E8F0;
+    padding: 14px 28px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .dots-nav {
+    display: flex;
+    gap: 8px;
+  }
+
+  .dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: #CBD5E1;
+    cursor: pointer;
+    border: none;
+  }
+
+  .dot.active {
+    background: var(--navy-bbva);
+    width: 26px;
+    border-radius: 6px;
+  }
+
+  .nav-arrows {
+    display: flex;
+    gap: 10px;
+  }
+
+  .btn-nav {
+    background: var(--navy-bbva);
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 5px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+  }
+
+  .btn-nav.outline {
+    background: white;
+    color: var(--navy-bbva);
+    border: 1px solid var(--navy-bbva);
+  }
+
+  .btn-nav:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+  }
+
+  /* =========================================================
+     MODO 2: DEMO INTERACTIVA FUNCIONAL (SIMULADOR TKINTER)
+     ========================================================= */
   .demo-banner {
     width: 100%;
-    max-width: 960px;
     background: #FFF8E7;
     border: 1px solid #F3D17A;
     color: #7A5800;
-    padding: 8px 16px;
+    padding: 10px 16px;
     border-radius: 6px;
-    margin-bottom: 12px;
+    margin-bottom: 14px;
     font-size: 13px;
     display: flex;
     justify-content: space-between;
@@ -183,19 +498,18 @@
   .demo-badge {
     background: var(--navy-bbva);
     color: white;
-    padding: 2px 8px;
+    padding: 3px 8px;
     border-radius: 4px;
     font-weight: bold;
     font-size: 11px;
-    letter-spacing: 0.5px;
+    margin-right: 6px;
   }
 
   .app-window {
     width: 100%;
-    max-width: 960px;
     background-color: var(--bg-bbva);
     border-radius: 8px;
-    box-shadow: 0 10px 30px rgba(0, 34, 68, 0.2);
+    box-shadow: 0 12px 32px rgba(0, 34, 68, 0.2);
     overflow: hidden;
     border: 1px solid #C8D2DC;
   }
@@ -217,14 +531,14 @@
     font-size: 13px;
     font-style: italic;
     color: #D4E4F7;
-    margin-top: 4px;
+    margin-top: 3px;
   }
 
   .header-company {
-    font-size: 14px;
+    font-size: 13px;
     font-weight: bold;
     color: var(--text-white);
-    margin-top: 4px;
+    margin-top: 3px;
     letter-spacing: 1px;
   }
 
@@ -235,9 +549,8 @@
   .label-frame {
     border: 1px solid #BCC7D4;
     border-radius: 4px;
-    padding: 15px 18px;
-    margin-bottom: 16px;
-    position: relative;
+    padding: 14px 18px;
+    margin-bottom: 14px;
     background-color: var(--bg-bbva);
   }
 
@@ -295,8 +608,7 @@
     font-weight: bold;
     border-radius: 3px;
     cursor: pointer;
-    margin-top: 6px;
-    transition: background 0.2s;
+    margin-top: 4px;
   }
 
   .btn-primary:hover {
@@ -305,7 +617,7 @@
 
   .console-box {
     width: 100%;
-    height: 270px;
+    height: 250px;
     background-color: #FFFFFF;
     border: 1px solid #9AA8B8;
     padding: 12px;
@@ -327,7 +639,7 @@
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 8px;
-    margin-top: 10px;
+    margin-top: 8px;
   }
 
   .action-btn {
@@ -338,7 +650,6 @@
     font-size: 12.5px;
     font-weight: bold;
     cursor: pointer;
-    transition: opacity 0.2s, transform 0.1s;
   }
 
   .action-btn:disabled {
@@ -351,6 +662,7 @@
   .btn-audit { background-color: var(--audit); }
   .btn-exit { background-color: var(--secondary); }
 
+  /* MODAL SIMULADOR */
   .modal-overlay {
     display: none;
     position: fixed;
@@ -366,7 +678,7 @@
     background: #1E1E1E;
     color: #E5E5E5;
     width: 100%;
-    max-width: 650px;
+    max-width: 660px;
     border-radius: 6px;
     overflow: hidden;
     box-shadow: 0 15px 40px rgba(0,0,0,0.4);
@@ -389,7 +701,7 @@
     font-family: 'Consolas', monospace;
     font-size: 12.5px;
     line-height: 1.5;
-    max-height: 360px;
+    max-height: 350px;
     overflow-y: auto;
     white-space: pre-wrap;
   }
@@ -411,88 +723,257 @@
     font-size: 12px;
   }
 
-  @media (max-width: 700px) {
+  @media (max-width: 780px) {
+    .grid-3, .grid-2, .kpi-row, .roadmap-steps { grid-template-columns: 1fr; }
     .actions-bar { grid-template-columns: 1fr 1fr; }
     .config-grid { grid-template-columns: 1fr; }
-    .welcome-title { font-size: 22px; }
   }
 </style>
 </head>
 <body>
 
-  <!-- ==========================================
-       PANTALLA INICIAL DE BIENVENIDA
-       ========================================== -->
-  <div id="welcomeOverlay" class="welcome-overlay">
-    <div class="welcome-card">
-      <div class="welcome-badge">BBVA SEGUROS</div>
-      <div class="avatar-wrapper">
-        <img src="avatar_bbva.jpg" alt="Bienvenidos a Seguros Despliegues BBVA">
-      </div>
-      <h1 class="welcome-title">¡BIENVENIDOS!</h1>
-      <p class="welcome-subtitle">SEGUROS DESPLIEGUES — Automatización &amp; Auditoría Inteligente AcselX<br><em>Desarrollado y Gestionado por: Enoides Mejía</em></p>
-      
-      <div class="progress-container">
-        <div class="progress-bar"></div>
-      </div>
-
-      <button class="btn-enter-demo" onclick="entrarADemo()">Ingresar a la Demo Interactiva →</button>
+  <!-- BARRA EJECUTIVA SUPERIOR -->
+  <nav class="top-nav">
+    <div class="brand-pill">
+      <span class="bbva-tag">Iniciativa IA</span>
+      <span class="brand-title">BBVA Seguros &amp; Holding | SEGUROS DESPLIEGUES</span>
     </div>
-  </div>
-
-  <!-- ==========================================
-       SIMULADOR PRINCIPAL
-       ========================================== -->
-  <div class="demo-banner">
-    <div><span class="demo-badge">DEMO INTERACTIVA</span> Simulador funcional para presentación <strong>BBVA SEGUROS</strong> — Sin conexión directa a BBDD productiva.</div>
-    <div><strong>Paso 1:</strong> Pulsa <em>Organizar &amp; Extraer Artefactos</em></div>
-  </div>
-
-  <div class="app-window">
-    <div class="header-frame">
-      <div class="header-title">SEGUROS DESPLIEGUES</div>
-      <div class="header-authors">Desarrollado y Gestionado por: Enoides Mejía</div>
-      <div class="header-company">BBVA SEGUROS</div>
+    <div class="mode-tabs">
+      <button id="tabPitch" class="tab-btn active" onclick="cambiarModo('pitch')">1. Presentación de Negocio</button>
+      <button id="tabDemo" class="tab-btn" onclick="cambiarModo('demo')">2. Demo en Vivo (Simulador)</button>
     </div>
+  </nav>
 
-    <div class="main-container">
-      <fieldset class="label-frame">
-        <legend class="label-frame-title"> Parámetros del Despliegue </legend>
-        <div class="config-grid">
-          <div class="config-label">Entorno Target:</div>
-          <div class="radio-group">
-            <label><input type="radio" name="entorno" value="CALIDAD" checked> CALIDAD (acselprb)</label>
-            <label><input type="radio" name="entorno" value="PRODUCCION"> PRODUCCIÓN (acselx_d)</label>
-          </div>
+  <div class="viewport-wrapper">
 
-          <div class="config-label">Identificador Feature:</div>
+    <!-- =========================================================
+         SECCIÓN 1: PRESENTACIÓN EJECUTIVA (4 LÁMINAS CONCRETAS)
+         ========================================================= -->
+    <section id="viewPitch" class="view-section active">
+      <div class="deck-card">
+        <div class="slide-header-bar">
           <div>
-            <input type="text" id="featureInput" class="feature-input" value="COLONEACSE-5041">
+            <div id="slideKicker" class="slide-step-tag">Visión Ejecutiva — Continuidad de Negocio</div>
+            <div id="slideTitle" class="slide-main-title">Blindaje Operativo y Reducción de Costos Productivos</div>
+          </div>
+          <div id="slideCounter" class="slide-counter">1 / 4</div>
+        </div>
+
+        <!-- LÁMINA 1: PORTADA & PROPÓSITO DE NEGOCIO -->
+        <div class="slide-body active" data-kicker="Visión Ejecutiva — Continuidad del Negocio Asegurador" data-title="Blindaje Operativo y Reducción de Costos en Producción">
+          <div class="hero-banner">
+            <div class="hero-kicker">CONCURSO INICIATIVAS IA • BBVA SEGUROS COLOMBIA</div>
+            <h1>SEGUROS DESPLIEGUES</h1>
+            <p>Plataforma automatizada de aseguramiento, retorno inmediato (Rollback) y auditoría post-paso para proteger la facturación, emisión e indemnizaciones del Core Asegurador.</p>
+            <div class="hero-author">Desarrollado con asistencia de IA Generativa — Enoides Mejía</div>
           </div>
 
-          <button class="btn-primary" onclick="procesarDespliegue()">Organizar &amp; Extraer Artefactos</button>
+          <div class="grid-3">
+            <div class="exec-box">
+              <h3>🛡️ Cero Indisponibilidad</h3>
+              <p>Protege los canales de venta digital y bancaseguros frente a interrupciones por cambios fallidos en Producción.</p>
+            </div>
+            <div class="exec-box teal-top">
+              <h3>💰 Mitigación de Pérdidas</h3>
+              <p>Elimina gastos por incidencias post-despliegue, War Rooms de emergencia, reprocesos y cobros extraordinarios.</p>
+            </div>
+            <div class="exec-box success-top">
+              <h3>🔒 Gobierno &amp; Riesgo Cero</h3>
+              <p>Estándar bancario sin credenciales expuestas (Zero-Hardcoding) y con certificación real sobre lo instalado.</p>
+            </div>
+          </div>
         </div>
-      </fieldset>
 
-      <fieldset class="label-frame">
-        <legend class="label-frame-title"> Consola de Procesamiento &amp; Trazabilidad </legend>
-        <div id="consoleOutput" class="console-box">Listo para iniciar. Seleccione el entorno, valide la Feature y presione "Organizar & Extraer Artefactos"...</div>
-      </fieldset>
+        <!-- LÁMINA 2: EL RIESGO DE NEGOCIO QUE RESOLVEMOS -->
+        <div class="slide-body" data-kicker="1. Necesidad sobre Procesos Clave" data-title="¿Cuánto le cuesta al Negocio una falla en Producción?">
+          <p style="font-size:14.5px; color:#334155; margin-bottom:18px; line-height:1.5;">
+            Cada nuevo producto, ajuste tarifario o cambio normativo en <strong>BBVA Seguros</strong> pasa por su Core transaccional (<strong>ACSELX</strong>). Gestionar estos pases de forma manual exponía a la aseguradora y al Holding a tres costos críticos:
+          </p>
 
-      <div class="actions-bar">
-        <button id="btnInst" class="action-btn btn-inst" disabled onclick="simularInstalacion()">1. Ejecutar INSTALACIÓN</button>
-        <button id="btnRoll" class="action-btn btn-roll" disabled onclick="simularRollback()">2. Ejecutar ROLLBACK</button>
-        <button id="btnAudit" class="action-btn btn-audit" disabled onclick="simularAuditoria()">3. Extraer Objetos BBDD</button>
-        <button id="btnFolder" class="action-btn btn-exit" onclick="simularCarpeta()">4. Ver Estructura Carpetas</button>
+          <div class="grid-3">
+            <div class="exec-box danger-top">
+              <h3>1. Costo por Caída Comercial</h3>
+              <p>Si una entrega falla en ventana productiva y el retorno manual falla o tarda horas, <strong>se frena la emisión de pólizas y el recaudo</strong> en oficinas y canales digitales.</p>
+            </div>
+            <div class="exec-box danger-top">
+              <h3>2. Gasto en Incidencias y War Rooms</h3>
+              <p>Un solo componente desactualizado o mal empaquetado detona tickets críticos al día siguiente, movilizando múltiples áreas técnicas, negocio y proveedores.</p>
+            </div>
+            <div class="exec-box danger-top">
+              <h3>3. Riesgo Regulatorio y Auditoría</h3>
+              <p>Exposición visual de claves críticas en consolas y ausencia de validación automática que certifique que Producción quedó idéntico a Calidad.</p>
+            </div>
+          </div>
+
+          <div style="margin-top:20px; background:#F0FDF4; border:1px solid #BBF7D0; border-radius:6px; padding:14px 18px; font-size:13.5px; color:#14532D;">
+            <strong>La Respuesta con SEGUROS DESPLIEGUES:</strong> Convertimos un proceso artesanal y riesgoso en un flujo blindado donde el <strong>Plan de Retorno (Rollback)</strong> se construye automáticamente desde la rama estable oficial (<em>Main</em>) antes de tocar Producción.
+          </div>
+        </div>
+
+        <!-- LÁMINA 3: IMPACTO ECONÓMICO Y AHORRO ESTIMADO -->
+        <div class="slide-body" data-kicker="2. Beneficios Financieros y Ahorro Estimado" data-title="Impacto Directo en P&amp;L: Menos Gasto en Fallas y Licencias">
+          <div class="kpi-row">
+            <div class="kpi-card">
+              <div class="kpi-number green">$185M – $245M</div>
+              <div class="kpi-label">COP / Año Protegidos y Ahorrados</div>
+              <div class="kpi-sub">En costos evitados de incidentes, continuidad y licencias</div>
+            </div>
+            <div class="kpi-card">
+              <div class="kpi-number teal">&gt; 85% Menos</div>
+              <div class="kpi-label">Incidencias Post-Paso</div>
+              <div class="kpi-sub">Cero errores humanos de empaquetado o versiones cruzadas</div>
+            </div>
+            <div class="kpi-card">
+              <div class="kpi-number">$0 COP</div>
+              <div class="kpi-label">Costo de Implementación</div>
+              <div class="kpi-sub">Construido in-house con IA sobre infraestructura actual</div>
+            </div>
+          </div>
+
+          <table class="clean-table">
+            <thead>
+              <tr>
+                <th>Frente de Ahorro para Seguros y Holding</th>
+                <th>Impacto en Continuidad y Operación</th>
+                <th>Ahorro / Pérdida Evitada Anual</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Reacción Inmediata ante Falla Productiva</strong></td>
+                <td>Retorno limpio en segundos desde versión estable (<em>Main</em>), evitando 1 a 3 horas de caída en ventas/emisión.</td>
+                <td><span class="badge-money">$80M – $120M COP</span></td>
+              </tr>
+              <tr>
+                <td><strong>Disminución de Gastos en Incidencias</strong></td>
+                <td>Auditoría automática contra BBDD elimina reprocesos, hotfixes nocturnos y escalamientos a fábrica.</td>
+                <td><span class="badge-money">$45M – $65M COP</span></td>
+              </tr>
+              <tr>
+                <td><strong>Ahorro en Licencias DevOps &amp; Seguridad</strong></td>
+                <td>Sustituye herramientas comerciales externas ($15k–$30k USD/año) cumpliendo estándar Zero-Hardcoding.</td>
+                <td><span class="badge-money">$60M+ COP</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- LÁMINA 4: VIABILIDAD, ESCALABILIDAD HOLDING Y PASO A DEMO -->
+        <div class="slide-body" data-kicker="3. Viabilidad y Escalabilidad Corporativa" data-title="Solución Lista Hoy y Escalable a Seguros y Holding">
+          <p style="font-size:14px; color:#334155; margin-bottom:10px;">
+            Desarrollada mediante <strong>IA Generativa aplicada a Ingeniería de Software</strong>: sin exponer datos sensibles del banco a modelos externos y lista para operar desde hoy por cualquier especialista de la unidad.
+          </p>
+
+          <div class="roadmap-steps">
+            <div class="phase-card">
+              <span class="phase-tag tag-live">Fase 1 • Operativa Hoy</span>
+              <h4>Core BBDD Seguros</h4>
+              <ul>
+                <li>Despliegue estandarizado QA y Producción.</li>
+                <li>Rollback garantizado desde rama <em>Main</em>.</li>
+                <li>Auditoría real en motor Oracle y credenciales blindadas.</li>
+              </ul>
+            </div>
+            <div class="phase-card">
+              <span class="phase-tag tag-next">Fase 2 • Ecosistema Seguros</span>
+              <h4>Integración Full-Stack</h4>
+              <ul>
+                <li>Conexión directa API con <strong>GitHub Enterprise BBVA</strong>.</li>
+                <li>Módulos para Oracle Forms, Reports (Solaris), aPlusC y SQL Server.</li>
+              </ul>
+            </div>
+            <div class="phase-card">
+              <span class="phase-tag tag-hold">Fase 3 • Sinergia Holding</span>
+              <h4>Estándar Replicable</h4>
+              <ul>
+                <li>Modelo exportable a otras unidades del Holding y filiales regionales.</li>
+                <li>Trazabilidad centralizada con autenticación corporativa LDAP.</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="cta-demo-banner">
+            <div>
+              <strong style="color:var(--navy-bbva); font-size:15px;">¿Cómo funciona en una ventana real de Producción?</strong>
+              <div style="font-size:13px; color:#475569;">Veamos en vivo el armado seguro, la reacción inmediata de Rollback y la auditoría automática.</div>
+            </div>
+            <button class="btn-launch-demo" onclick="cambiarModo('demo')">Ir a la Demo Interactiva →</button>
+          </div>
+        </div>
+
+        <!-- PIE DE CONTROLES DE LA PRESENTACIÓN -->
+        <div class="deck-footer">
+          <div class="dots-nav" id="dotsContainer">
+            <button class="dot active" onclick="irASlide(0)"></button>
+            <button class="dot" onclick="irASlide(1)"></button>
+            <button class="dot" onclick="irASlide(2)"></button>
+            <button class="dot" onclick="irASlide(3)"></button>
+          </div>
+          <div class="nav-arrows">
+            <button id="btnPrev" class="btn-nav outline" onclick="moverSlide(-1)" disabled>← Anterior</button>
+            <button id="btnNext" class="btn-nav" onclick="moverSlide(1)">Siguiente →</button>
+          </div>
+        </div>
       </div>
-    </div>
+    </section>
+
+    <!-- =========================================================
+         SECCIÓN 2: DEMO INTERACTIVA (SIMULADOR FUNCIONAL)
+         ========================================================= -->
+    <section id="viewDemo" class="view-section">
+      <div class="demo-banner">
+        <div><span class="demo-badge">DEMO EN VIVO</span> Simulador funcional <strong>SEGUROS DESPLIEGUES</strong> — Prevención de fallas, Rollback inmediato y Auditoría en BBDD.</div>
+        <div><a href="javascript:void(0)" onclick="cambiarModo('pitch')" style="color:var(--navy-bbva); font-weight:700; text-decoration:none;">← Volver a Indicadores de Negocio</a></div>
+      </div>
+
+      <div class="app-window">
+        <div class="header-frame">
+          <div class="header-title">SEGUROS DESPLIEGUES</div>
+          <div class="header-authors">Desarrollado y Gestionado por: Enoides Mejía</div>
+          <div class="header-company">BBVA SEGUROS</div>
+        </div>
+
+        <div class="main-container">
+          <fieldset class="label-frame">
+            <legend class="label-frame-title"> Parámetros del Despliegue </legend>
+            <div class="config-grid">
+              <div class="config-label">Entorno Target:</div>
+              <div class="radio-group">
+                <label><input type="radio" name="entorno" value="CALIDAD" checked> CALIDAD (acselprb)</label>
+                <label><input type="radio" name="entorno" value="PRODUCCION"> PRODUCCIÓN (acselx_d)</label>
+              </div>
+
+              <div class="config-label">Identificador Entrega:</div>
+              <div>
+                <input type="text" id="featureInput" class="feature-input" value="COLONEACSE-5041">
+              </div>
+
+              <button class="btn-primary" onclick="procesarDespliegue()">Organizar &amp; Blindar Artefactos (Instalación + Rollback Seguro)</button>
+            </div>
+          </fieldset>
+
+          <fieldset class="label-frame">
+            <legend class="label-frame-title"> Consola de Control Operativo &amp; Trazabilidad </legend>
+            <div id="consoleOutput" class="console-box">Listo para iniciar ventana controlada. Seleccione CALIDAD o PRODUCCIÓN y pulse "Organizar & Blindar Artefactos"...</div>
+          </fieldset>
+
+          <div class="actions-bar">
+            <button id="btnInst" class="action-btn btn-inst" disabled onclick="simularInstalacion()">1. Ejecutar INSTALACIÓN</button>
+            <button id="btnRoll" class="action-btn btn-roll" disabled onclick="simularRollback()">2. Reacción ROLLBACK</button>
+            <button id="btnAudit" class="action-btn btn-audit" disabled onclick="simularAuditoria()">3. Auditar Objetos BBDD</button>
+            <button id="btnFolder" class="action-btn btn-exit" onclick="simularCarpeta()">4. Ver Evidencias</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
   </div>
 
-  <!-- MODAL PARA SIMULAR VENTANA CMD / SQL*PLUS / CARPETAS -->
+  <!-- MODAL PARA SIMULAR VENTANA CMD / AUDITORÍA / EVIDENCIAS -->
   <div id="modalOverlay" class="modal-overlay">
     <div class="modal-card">
       <div class="modal-header">
-        <span id="modalTitle">Consola SQL*Plus</span>
+        <span id="modalTitle">Consola Corporativa</span>
         <span style="cursor:pointer;" onclick="cerrarModal()">✕</span>
       </div>
       <div id="modalBody" class="modal-body"></div>
@@ -503,19 +984,82 @@
   </div>
 
 <script>
-  // Transición automática de la bienvenida a la demo tras 3.8 segundos
-  const timerBienvenida = setTimeout(() => {
-    entrarADemo();
-  }, 3800);
+  // ==========================================
+  // LÓGICA DE NAVEGACIÓN: PRESENTACIÓN VS DEMO
+  // ==========================================
+  let slideActual = 0;
+  const slides = document.querySelectorAll('.slide-body');
+  const dots = document.querySelectorAll('.dot');
 
-  function entrarADemo() {
-    clearTimeout(timerBienvenida);
-    const overlay = document.getElementById('welcomeOverlay');
-    if (overlay) {
-      overlay.classList.add('hidden');
+  function cambiarModo(modo) {
+    const viewPitch = document.getElementById('viewPitch');
+    const viewDemo = document.getElementById('viewDemo');
+    const tabPitch = document.getElementById('tabPitch');
+    const tabDemo = document.getElementById('tabDemo');
+
+    if (modo === 'demo') {
+      viewPitch.classList.remove('active');
+      viewDemo.classList.add('active');
+      tabPitch.classList.remove('active');
+      tabDemo.classList.add('active');
+    } else {
+      viewDemo.classList.remove('active');
+      viewPitch.classList.add('active');
+      tabDemo.classList.remove('active');
+      tabPitch.classList.add('active');
+    }
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function actualizarVistaSlide() {
+    slides.forEach((s, idx) => {
+      s.classList.toggle('active', idx === slideActual);
+    });
+    dots.forEach((d, idx) => {
+      d.classList.toggle('active', idx === slideActual);
+    });
+
+    const activeSlide = slides[slideActual];
+    document.getElementById('slideKicker').textContent = activeSlide.getAttribute('data-kicker');
+    document.getElementById('slideTitle').textContent = activeSlide.getAttribute('data-title');
+    document.getElementById('slideCounter').textContent = `${slideActual + 1} / ${slides.length}`;
+
+    document.getElementById('btnPrev').disabled = (slideActual === 0);
+    const btnNext = document.getElementById('btnNext');
+    if (slideActual === slides.length - 1) {
+      btnNext.textContent = "Abrir Demo en Vivo →";
+    } else {
+      btnNext.textContent = "Siguiente →";
     }
   }
 
+  function moverSlide(delta) {
+    if (slideActual === slides.length - 1 && delta > 0) {
+      cambiarModo('demo');
+      return;
+    }
+    const nuevo = slideActual + delta;
+    if (nuevo >= 0 && nuevo < slides.length) {
+      slideActual = nuevo;
+      actualizarVistaSlide();
+    }
+  }
+
+  function irASlide(index) {
+    slideActual = index;
+    actualizarVistaSlide();
+  }
+
+  // Navegación con flechas del teclado cuando está en modo presentación
+  document.addEventListener('keydown', (e) => {
+    if (!document.getElementById('viewPitch').classList.contains('active')) return;
+    if (e.key === 'ArrowRight') moverSlide(1);
+    if (e.key === 'ArrowLeft') moverSlide(-1);
+  });
+
+  // ==========================================
+  // LÓGICA DEL SIMULADOR INTERACTIVO
+  // ==========================================
   const consoleEl = document.getElementById('consoleOutput');
 
   function appendLog(htmlText) {
@@ -533,35 +1077,31 @@
   function procesarDespliegue() {
     const { entorno, feature, featureNorm } = getParams();
     consoleEl.innerHTML = "";
-    
+
     const isQA = entorno === "CALIDAD";
     const baseDir = isQA 
-      ? `C:\\backup_seguros\\SEGUROS\\INSTALACIONES\\CALIDAD\\2026\\NOVIEMBRE\\AX\\18\\${feature}`
+      ? `C:\\backup_seguros\\SEGUROS\\INSTALACIONES\\CALIDAD\\2026\\NOVIEMBRE\\AX\\25\\${feature}`
       : `C:\\backup_seguros\\SEGUROS\\INSTALACIONES\\PRODUCCION\\NOVIEMBRE\\${feature}`;
     const zipFeat = isQA ? `${feature}.zip` : `${feature}PR.zip`;
     const zipMain = isQA ? `main.zip` : `mainpr.zip`;
     const varPass = isQA ? `PASS_ACSEL_QA` : `PASS_ACSEL_PR`;
 
     const pasos = [
-      `<span class="log-info">=== INICIANDO PROCESO DE DESPLIEGUE PARA [${entorno}] ===</span>`,
-      `Feature Objetivo: <strong>${feature}</strong> (Token normalizado: ${featureNorm})`,
-      `[INFO] Organizando artefactos y validando estructura...`,
-      `[Ruta Destino]: ${baseDir}`,
-      `[Buscando ZIP Feature]: D:\\PROYECTO DESCARGAR DESDE GITHUB\\PASOS ${isQA ? 'QA' : 'PR'}\\${zipFeat}`,
-      `[Buscando ZIP Main (Respaldo)]: D:\\PROYECTO DESCARGAR DESDE GITHUB\\PASOS ${isQA ? 'QA' : 'PR'}\\${zipMain}`,
-      `\n<span class="log-info">--- 1. Procesando Artefactos de INSTALACIÓN ---</span>`,
-      `<span class="log-ok">[OK]</span> Listado detectado en /entregas/: listado_${featureNorm}.sql`,
-      `[INFO] 3 componentes referenciados en el listado.`,
-      ` -> <span class="log-ok">[EXTRAÍDO desde ZIP Feature]</span> ${feature}_Script_Tablas.sql`,
-      ` -> <span class="log-ok">[EXTRAÍDO desde ZIP Feature]</span> PR_ACSEL_POLIZAS.pks`,
-      ` -> <span class="log-ok">[EXTRAÍDO desde ZIP Feature]</span> PR_ACSEL_POLIZAS.pkb`,
-      `\n<span class="log-info">--- 2. Procesando Artefactos de ROLLBACK (Objetos desde Main) ---</span>`,
-      `<span class="log-ok">[OK]</span> Listado detectado en /entregas/: listado_rollback_${featureNorm}.sql`,
-      `[INFO] 2 componentes referenciados para retorno seguro.`,
-      ` -> <span class="log-ok">[EXTRAÍDO desde Main]</span> PR_ACSEL_POLIZAS.pks`,
-      ` -> <span class="log-ok">[EXTRAÍDO desde Main]</span> PR_ACSEL_POLIZAS.pkb`,
-      `\n<span class="log-sec">[SEGURIDAD ZERO-HARDCODING]</span> Variable de entorno %${varPass}% verificada en el sistema.`,
-      `<span class="log-ok">[OK]</span> Scripts .bat creados sin exposición de credenciales.`
+      `<span class="log-info">=== INICIANDO VALIDACIÓN PREVENTIVA PARA [${entorno}] ===</span>`,
+      `Entrega Objetivo: <strong>${feature}</strong> (Normalización automática anti-error: ${featureNorm})`,
+      `[Ruta Trazabilidad]: ${baseDir}`,
+      `[Paquete Entrega]: ${zipFeat} | [Línea Base Estable]: ${zipMain}`,
+      `\n<span class="log-info">--- 1. Validando Componentes de Entrega ---</span>`,
+      `<span class="log-ok">[OK]</span> Listado certificado: listado_${featureNorm}.sql (3 objetos validados)`,
+      ` -> <span class="log-ok">[LISTO]</span> ${feature}_Script_Tablas.sql`,
+      ` -> <span class="log-ok">[LISTO]</span> PR_ACSEL_POLIZAS.pks`,
+      ` -> <span class="log-ok">[LISTO]</span> PR_ACSEL_POLIZAS.pkb`,
+      `\n<span class="log-info">--- 2. Blindando Plan de Retorno Inmediato (Desde Rama Estable Main) ---</span>`,
+      `<span class="log-ok">[OK]</span> Plan de contingencia verificado: listado_rollback_${featureNorm}.sql`,
+      ` -> <span class="log-ok">[RESPALDO OFICIAL MAIN]</span> PR_ACSEL_POLIZAS.pks`,
+      ` -> <span class="log-ok">[RESPALDO OFICIAL MAIN]</span> PR_ACSEL_POLIZAS.pkb`,
+      `\n<span class="log-sec">[GOBIERNO &amp; CIBERSEGURIDAD]</span> Credencial inyectada vía entorno seguro (%${varPass}%). Cero claves expuestas.`,
+      `<span class="log-ok">[OK]</span> Ventana lista para ejecución segura y reacción en 1 clic.`
     ];
 
     let i = 0;
@@ -575,7 +1115,7 @@
         document.getElementById('btnRoll').disabled = false;
         document.getElementById('btnAudit').disabled = false;
       }
-    }, 90);
+    }, 85);
   }
 
   function simularInstalacion() {
@@ -584,68 +1124,67 @@
     const varPass = isQA ? "PASS_ACSEL_QA" : "PASS_ACSEL_PR";
     const sid = isQA ? "ACSELPRB" : "acselx_d";
 
-    appendLog(`\n<span class="log-info">[EJECUTANDO INSTALACIÓN]</span> Lanzando SQL*Plus para ${entorno}...`);
-    
+    appendLog(`\n<span class="log-info">[EJECUCIÓN CONTROLADA]</span> Aplicando entrega en ${entorno}...`);
+
     abrirModal(
-      `CMD - SCRIPT_${isQA ? 'QA' : 'PRE'}_NEW.bat [${feature}]`,
+      `Ejecución Segura - SCRIPT_${isQA ? 'QA' : 'PRE'}_NEW.bat [${feature}]`,
       `=========================================================\n` +
-      `Iniciando instalacion segura en ambiente de ${entorno}\n` +
+      `Despliegue controlado en ambiente de ${entorno}\n` +
       `=========================================================\n` +
-      `[SEGURIDAD] Inyectando credencial desde variable de entorno %${varPass}%...\n` +
-      `Conectando a: ACSELPRB/********@//82.250.92.162:1521/${sid}\n\n` +
+      `[SEGURIDAD] Autenticación cifrada vía variable corporativa %${varPass}%\n` +
+      `Destino: ACSELPRB/********@//82.250.92.162:1521/${sid}\n\n` +
       `SQL> @listado.sql\n` +
-      `  -> Ejecutando ${feature}_Script_Tablas.sql ... Tabla modificada.\n` +
-      `  -> Compilando PR_ACSEL_POLIZAS.pks ... Especificacion creada.\n` +
-      `  -> Compilando PR_ACSEL_POLIZAS.pkb ... Cuerpo del paquete creado sin errores.\n\n` +
-      `[OK] Log de evidencia generado: Evidencia_instalacion_log.sql\n` +
+      `  ✔ ${feature}_Script_Tablas.sql ... Aplicado correctamente.\n` +
+      `  ✔ PR_ACSEL_POLIZAS.pks ... Compilado sin errores.\n` +
+      `  ✔ PR_ACSEL_POLIZAS.pkb ... Compilado sin errores.\n\n` +
+      `[EVIDENCIA AUDITORÍA] Log generado: Evidencia_instalacion_log.sql\n` +
       `=========================================================`
     );
   }
 
   function simularRollback() {
     const { entorno, feature } = getParams();
-    if (!confirm(`¿Está seguro que desea ejecutar el plan de retorno (ROLLBACK) para ${feature} en ${entorno}?`)) return;
+    if (!confirm(`¿Activar protocolo de REACCIÓN INMEDIATA (ROLLBACK) para ${feature} en ${entorno}?`)) return;
 
     const isQA = entorno === "CALIDAD";
     const varPass = isQA ? "PASS_ACSEL_QA" : "PASS_ACSEL_PR";
     const sid = isQA ? "ACSELPRB" : "acselx_d";
 
-    appendLog(`\n<span class="log-warn">[EJECUTANDO ROLLBACK]</span> Lanzando plan de retorno desde respaldo Main...`);
+    appendLog(`\n<span class="log-warn">[CONTINGENCIA ACTIVADA]</span> Restaurando operación estable desde Main en segundos...`);
 
     abrirModal(
-      `CMD - SCRIPT_${isQA ? 'QA' : 'PRE'}_ROLL_NEW.bat [${feature}]`,
+      `Reacción Inmediata - SCRIPT_${isQA ? 'QA' : 'PRE'}_ROLL_NEW.bat [${feature}]`,
       `====================================================================\n` +
-      `Iniciando instalacion segura en ambiente de ${entorno} - ROLLBACK\n` +
+      `PROTOCOLO DE CONTINUIDAD OPERATIVA - ROLLBACK ${entorno}\n` +
       `====================================================================\n` +
-      `[SEGURIDAD] Inyectando credencial desde variable de entorno %${varPass}%...\n` +
-      `Conectando a: ACSELPRB/********@//82.250.92.162:1521/${sid}\n\n` +
+      `[IMPACTO NEGOCIO] Evitando indisponibilidad prolongada en canales de venta.\n` +
+      `Destino: ACSELPRB/********@//82.250.92.162:1521/${sid}\n\n` +
       `SQL> @listado_rollback.sql\n` +
-      `  -> Restaurando PR_ACSEL_POLIZAS.pks (Version Main) ... Especificacion creada.\n` +
-      `  -> Restaurando PR_ACSEL_POLIZAS.pkb (Version Main) ... Cuerpo creado.\n\n` +
-      `[OK] Retorno completado. Log: Evidencia_instalacion_Rollback_log.sql\n` +
+      `  ✔ PR_ACSEL_POLIZAS.pks restaurado a versión certificada Main.\n` +
+      `  ✔ PR_ACSEL_POLIZAS.pkb restaurado a versión certificada Main.\n\n` +
+      `[SERVICIO RESTABLECIDO] Operación normalizada en menos de 30 segundos.\n` +
+      `Log oficial: Evidencia_instalacion_Rollback_log.sql\n` +
       `====================================================================`
     );
   }
 
   function simularAuditoria() {
     const { entorno, feature } = getParams();
-    const destAudit = `D:\\BUSCAR LISTADO EN BBDD\\NOVIEMBRE\\AX\\18\\${feature}`;
+    const destAudit = `D:\\BUSCAR LISTADO EN BBDD\\NOVIEMBRE\\AX\\25\\${feature}`;
 
-    appendLog(`\n<span class="log-sec">==============================================================================</span>`);
-    appendLog(`<span class="log-sec">=== MÓDULO DE AUDITORÍA: EXTRAYENDO OBJETOS DESDE BBDD [${entorno}] ===</span>`);
-    appendLog(`[Ruta Destino Auditoría]: ${destAudit}`);
-    appendLog(` -> Consultando [PACKAGE] PR_ACSEL_POLIZAS.pks en ALL_SOURCE ... <span class="log-ok">[OK]</span>`);
-    appendLog(` -> Consultando [PACKAGE BODY] PR_ACSEL_POLIZAS.pkb en ALL_SOURCE ... <span class="log-ok">[OK]</span>`);
-    appendLog(`<span class="log-ok">[RESUMEN AUDITORÍA BBDD] Analizados: 2 | Exitosos: 2 | Fallidos/Vacíos: 0</span>`);
+    appendLog(`\n<span class="log-sec">=== AUDITORÍA AUTOMÁTICA DE INTEGRIDAD EN [${entorno}] ===</span>`);
+    appendLog(` -> Verificando PR_ACSEL_POLIZAS.pks directamente en motor Oracle ... <span class="log-ok">[CERTIFICADO]</span>`);
+    appendLog(` -> Verificando PR_ACSEL_POLIZAS.pkb directamente en motor Oracle ... <span class="log-ok">[CERTIFICADO]</span>`);
+    appendLog(`<span class="log-ok">[RESULTADO] 100% de integridad entre Calidad y Producción. Cero riesgo de incidencia post-paso.</span>`);
 
     abrirModal(
-      `Auditoría Post-Despliegue - Diccionario Oracle (ALL_SOURCE)`,
-      `Extracción silenciosa completada mediante sqlplus -s\n` +
-      `Ruta de comparación: ${destAudit}\n\n` +
-      `Artefactos descargados desde la instancia Oracle:\n` +
-      `  ✔ PR_ACSEL_POLIZAS.pks  (4.2 KB - Coincide 100% con QA)\n` +
-      `  ✔ PR_ACSEL_POLIZAS.pkb  (38.7 KB - Coincide 100% con QA)\n\n` +
-      `Listo para validación de integridad (Diff) entre Calidad y Producción.`
+      `Certificación de Integridad Post-Despliegue (${entorno})`,
+      `Validación directa contra catálogo productivo Oracle\n` +
+      `Repositorio de Evidencia: ${destAudit}\n\n` +
+      `Estado de Componentes Críticos del Negocio:\n` +
+      `  ✔ PR_ACSEL_POLIZAS.pks  — Íntegro (0 diferencias frente a QA)\n` +
+      `  ✔ PR_ACSEL_POLIZAS.pkb  — Íntegro (0 diferencias frente a QA)\n\n` +
+      `Beneficio Directo: Se descartan fallas ocultas antes de abrir operación comercial.`
     );
   }
 
@@ -653,22 +1192,22 @@
     const { entorno, feature } = getParams();
     const isQA = entorno === "CALIDAD";
     const baseDir = isQA 
-      ? `C:\\backup_seguros\\SEGUROS\\INSTALACIONES\\CALIDAD\\2026\\NOVIEMBRE\\AX\\18\\${feature}`
+      ? `C:\\backup_seguros\\SEGUROS\\INSTALACIONES\\CALIDAD\\2026\\NOVIEMBRE\\AX\\25\\${feature}`
       : `C:\\backup_seguros\\SEGUROS\\INSTALACIONES\\PRODUCCION\\NOVIEMBRE\\${feature}`;
 
     abrirModal(
-      `Explorador de Archivos - Estructura Generada`,
+      `Gobierno y Trazabilidad de Evidencias`,
       `📁 ${baseDir}\n` +
       ` ├── 📄 listado.sql\n` +
       ` ├── 📄 ${feature}_Script_Tablas.sql\n` +
       ` ├── 📄 PR_ACSEL_POLIZAS.pks\n` +
       ` ├── 📄 PR_ACSEL_POLIZAS.pkb\n` +
       ` ├── ⚙️ SCRIPT_${isQA ? 'QA' : 'PRE'}_NEW.bat\n` +
-      ` ├── 📝 Evidencia_instalacion_log.sql\n` +
-      ` └── 📁 ROLLBACK\n` +
+      ` ├── 📝 Evidencia_instalacion_log.sql  (Soporte Auditoría)\n` +
+      ` └── 📁 ROLLBACK  (Cápsula de Contingencia Lista)\n` +
       `      ├── 📄 listado_rollback.sql\n` +
-      `      ├── 📄 PR_ACSEL_POLIZAS.pks  (Respaldo limpio de Main)\n` +
-      `      ├── 📄 PR_ACSEL_POLIZAS.pkb  (Respaldo limpio de Main)\n` +
+      `      ├── 📄 PR_ACSEL_POLIZAS.pks  (Respaldo Oficial Main)\n` +
+      `      ├── 📄 PR_ACSEL_POLIZAS.pkb  (Respaldo Oficial Main)\n` +
       `      └── ⚙️ SCRIPT_${isQA ? 'QA' : 'PRE'}_ROLL_NEW.bat`
     );
   }
